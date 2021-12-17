@@ -1,0 +1,31 @@
+.header {
+  border-bottom: 1px solid #eaeaea;
+  color: black;
+}
+
+.nav {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.navbarLink {
+  padding: 1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.navbarImages {
+  float: right;
+}
+
+.navbarImage {
+  padding-left: 10px;
+  float: left;
+}
+
+.borderCircle {
+  border-radius: 9999px;
+}
