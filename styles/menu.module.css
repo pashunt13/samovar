@@ -24,6 +24,10 @@
   list-style-type: none;
 }
 
+.listItem:hover {
+  border-color: #aeaeae;
+}
+
 .menuImage {
   width: 100%;
   height: 250px;
