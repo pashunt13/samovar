@@ -1,25 +1,13 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import { Item } from "./entity/Item";
+import { Items } from "./entity/Item";
 
-export function getItemsData() {
+export async function getItemsData() {
   return (
-    createConnection({
-        type: "postgres",
-        host: "localhost",
-        port: 5432,
-        username: "postgres",
-        password: "postgres",
-        database: "samovarDB",
-        entities: [
-          __dirname + "/entity/*.ts"
-        ],
-        synchronize: true,
-        logging: false
-    }).then(async connection => {
+    createConnection().then(async connection => {
       
-      let item = new Item();
-      let itemRepository = connection.getRepository(Item);
+      let item = new Items();
+      let itemRepository = connection.getRepository(Items);
 
       // решил пока отключить, вместо этого создал объект ниже
       // let allItems = await itemRepository.find();
@@ -27,16 +15,39 @@ export function getItemsData() {
 
       const allItems = [{
         id: 1,
-        title: 'eda',
-        price: 100500
+        title: 'Разносолы',
+        price: 170
+      },
+      { 
+        id: 2,
+        title: 'Свежие овощи',
+        price: 150
       },
       {
-        id: 2,
-        title: 'drugaya eda',
-        price: 12345
+        id: 3,
+        title: 'Сельдь в масле',
+        price: 180
+      },
+      {
+        id: 4,
+        title: 'Сало ассорти',
+        price: 210
+      },
+      {
+        id: 5,
+        title: 'Суджук',
+        price: 180
       }];
-
+      
       return allItems;
-    }).catch(error => console.log(error))
+
+    }).then(allItems => console.log(allItems))
+    .catch(error => console.log(error))
   )
 }
+
+export const gg = new Promise((resolve, reject) => {
+  const connection = 'gg';
+  resolve(connection);
+})
+

@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "host",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres",
+  "database": "samovarDB",
+  "entities": [
+    "src/entity/*.ts"
+  ],
+  "synchronize": true,
+  "logging": false
+}
