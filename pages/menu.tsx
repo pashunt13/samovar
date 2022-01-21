@@ -1,29 +1,43 @@
 import Layout from "../components/layout"
 import styles from "../styles/menu.module.css"
 import Image from "next/image"
-import "reflect-metadata";
+
 import { createConnection } from "typeorm";
-import { Items } from "../src/entity/Item";
+import { Item } from "../src/entity/Item";
+import { prepareConnection } from "src/db";
+
 
 
 export async function getStaticProps() {
-  const allItems = await createConnection().then(async connection => {
-    let item = new Items();
-    let itemRepository = connection.getRepository(Items);
+  try {
+    const connection = await createConnection({
+      type: "postgres",
+      host: "host",
+      port: 5432,
+      username: "postgres",
+      password: "postgres",
+      database: "samovarDB",
+      entities: [
+        Item
+      ],
+    });
+    const item = new Item();
+    const itemRepository = connection.getRepository(Item);
+    const data = await itemRepository.find();
+    const allItems = JSON.parse(JSON.stringify(data));
+    
+    connection.close();
 
-    let allItems = await itemRepository.find();
-    console.log("All items from the db: ", allItems);
-    return allItems;
-  }).catch(error => console.log('ERRRROOOORRRRR:' + error));
-
-  console.log('\nallItems in  getStaticProps(): ' + allItems + '\n');
-  return {
-    props: {
-      allItems
+    console.log('\nallItems in  getStaticProps(): ' + allItems + '\n');
+    return {
+      props: {
+        allItems
+      }
     }
+  } catch (error) {
+     console.log('ERRRRROOOOOORRRRR: ' + error); 
   }
 }
-
 
 export default function Menu({ allItems }) {
   return (
@@ -31,7 +45,6 @@ export default function Menu({ allItems }) {
       <div className={styles.container}>
         <h1 className={styles.title}>Меню</h1>
         <ul className={styles.grid}>
-        {console.log('allItems in  Menu component: ' + allItems)}
           {allItems.map((item) => (
             <li className={styles.listItem} key={item.id}>
               <Image 
@@ -67,4 +80,4 @@ export default function Menu({ allItems }) {
       </div>
     </Layout>
   )
-} 
+}

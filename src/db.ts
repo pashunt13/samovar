@@ -1,53 +1,35 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
-import { Items } from "./entity/Item";
+import { Item } from "./entity/Item";
+import { getConnection } from "typeorm";
 
-export async function getItemsData() {
-  return (
-    createConnection().then(async connection => {
-      
-      let item = new Items();
-      let itemRepository = connection.getRepository(Items);
+let connectionReadyPromise: Promise<void> | null = null;
 
-      // решил пока отключить, вместо этого создал объект ниже
-      // let allItems = await itemRepository.find();
-      // console.log("All items from the db: ", allItems);
+export async function prepareConnection() {
+  if (!connectionReadyPromise) {
+    connectionReadyPromise = (async () => {
+      // clean up old connection that references outdated hot-reload classes
+      try {
+        const staleConnection = getConnection();
+        await staleConnection.close();
+      } catch (error) {
+        // no stale connection to clean up
+      }
 
-      const allItems = [{
-        id: 1,
-        title: 'Разносолы',
-        price: 170
-      },
-      { 
-        id: 2,
-        title: 'Свежие овощи',
-        price: 150
-      },
-      {
-        id: 3,
-        title: 'Сельдь в масле',
-        price: 180
-      },
-      {
-        id: 4,
-        title: 'Сало ассорти',
-        price: 210
-      },
-      {
-        id: 5,
-        title: 'Суджук',
-        price: 180
-      }];
-      
-      return allItems;
+      // wait for new default connection
+      await createConnection({
+        type: "postgres",
+        host: "host",
+        port: 5432,
+        username: "postgres",
+        password: "postgres",
+        database: "samovarDB",
+        entities: [
+          Item
+        ],
+      });
+    })();
+  }
 
-    }).then(allItems => console.log(allItems))
-    .catch(error => console.log(error))
-  )
+  return connectionReadyPromise;
 }
-
-export const gg = new Promise((resolve, reject) => {
-  const connection = 'gg';
-  resolve(connection);
-})
-

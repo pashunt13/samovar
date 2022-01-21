@@ -6,7 +6,7 @@
   "password": "postgres",
   "database": "samovarDB",
   "entities": [
-    "src/entity/*.ts"
+    "Item"
   ],
   "synchronize": true,
   "logging": false
