@@ -1,37 +1,23 @@
 import Layout from "../components/layout"
 import styles from "../styles/menu.module.css"
 import Image from "next/image"
-
-import { createConnection } from "typeorm";
+import { getConnection } from "typeorm";
 import { Item } from "../src/entity/Item";
-import { prepareConnection } from "src/db";
+import { instanceToPlain } from 'class-transformer';
+import { prepareConnection } from 'src/db'
 
-
-
-export async function getStaticProps() {
+export async function getServerSideProps() {
   try {
-    const connection = await createConnection({
-      type: "postgres",
-      host: "host",
-      port: 5432,
-      username: "postgres",
-      password: "postgres",
-      database: "samovarDB",
-      entities: [
-        Item
-      ],
-    });
+    await prepareConnection();
+    const connection = getConnection();
     const item = new Item();
     const itemRepository = connection.getRepository(Item);
-    const data = await itemRepository.find();
-    const allItems = JSON.parse(JSON.stringify(data));
-    
-    connection.close();
+    const allItems = await itemRepository.find();
 
-    console.log('\nallItems in  getStaticProps(): ' + allItems + '\n');
+    console.log('\nallItems in  getStaticProps(): ', allItems, '\n');
     return {
       props: {
-        allItems
+        allItems: instanceToPlain(allItems)
       }
     }
   } catch (error) {

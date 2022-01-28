@@ -3,9 +3,11 @@ import { createConnection } from "typeorm";
 import { Item } from "./entity/Item";
 import { getConnection } from "typeorm";
 
+import {getConnectionManager, ConnectionManager, Connection} from "typeorm";
+
 let connectionReadyPromise: Promise<void> | null = null;
 
-export async function prepareConnection() {
+export function prepareConnection() {
   if (!connectionReadyPromise) {
     connectionReadyPromise = (async () => {
       // clean up old connection that references outdated hot-reload classes
