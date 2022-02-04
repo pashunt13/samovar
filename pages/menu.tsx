@@ -1,15 +1,14 @@
 import Layout from "../components/layout"
 import styles from "../styles/menu.module.css"
 import Image from "next/image"
-import { getConnection } from "typeorm";
 import { Item } from "../src/entity/Item";
 import { instanceToPlain } from 'class-transformer';
 import { prepareConnection } from 'src/db'
 
 export async function getServerSideProps() {
   try {
-    await prepareConnection();
-    const connection = getConnection();
+    
+    const connection = await prepareConnection();
     const item = new Item();
     const itemRepository = connection.getRepository(Item);
     const allItems = await itemRepository.find();
@@ -50,7 +49,7 @@ export default function Menu({ allItems }) {
                   className={styles.menuItemQuantity} 
                   type="number"
                   min={1}
-                  max={99} 
+                  max={99}
                 />
                 <div className={styles.unit}>шт.</div> */}
 
