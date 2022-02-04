@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {

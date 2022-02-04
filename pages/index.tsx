@@ -21,7 +21,6 @@ export default function Home() {
           <h1 className={styles.title}>
             САМОВАР
           </h1>
-
         </main>
       </div>
     </Layout>
