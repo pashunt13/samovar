@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { Category } from "./Category";
+import { BasketItem } from "./BasketItem";
 
 @Entity()
 export class Item {
@@ -11,12 +13,15 @@ export class Item {
   @Column("varchar")
   description: string;
   
-  @Column("integer")
-  category: number;
-  
   @Column("varchar")
   portion: string;
   
   @Column("integer")
   price: number;
+
+  @ManyToOne(() => Category, (category) => category.items)
+  category: Category;
+
+  @OneToMany(() => BasketItem, (BasketItem) => BasketItem.item)
+  basketItems: BasketItem[];
 }

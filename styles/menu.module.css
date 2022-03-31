@@ -58,19 +58,7 @@
   font-weight: 700;
 }
 
-.menuItemQuantity {
-  margin: 1rem 1px 1rem 1rem;
-  width: 40px;
-  height: 25px;
-}
-
-.unit {
-  margin: 0;
-  font-size: 12px;
-  color: #999;
-}
-
-.inCart {
+.toCart {
   margin: 1rem;
   height: 36px;
   width: 108px;
@@ -81,8 +69,23 @@
   color: white;
 }
 
-.inCart:hover {
+.toCart:hover {
   background-color: limegreen;
+}
+
+.inCart {
+  margin: 1rem;
+  height: 36px;
+  width: 108px;
+  border: 1px solid green;
+  border-radius: 7px;
+  background-color: whitesmoke;
+  font-weight: 700;
+  color: darkgray;
+}
+
+.inCart:hover {
+  background-color: whitesmoke;
 }
 
 .grid {

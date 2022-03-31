@@ -1,8 +1,18 @@
-import "reflect-metadata";
-import '../styles/globals.css'
+import 'reflect-metadata';
+import '../styles/globals.css';
+import { AppWrapper } from 'src/context/state';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+interface MyAppProps {
+  pageProps: object,
+  Component: React.ComponentType
 }
 
-export default MyApp
+function MyApp({ Component, pageProps }: MyAppProps) {
+  return (
+    <AppWrapper>
+      <Component {...pageProps} />
+    </AppWrapper>
+  )
+}
+
+export default MyApp;

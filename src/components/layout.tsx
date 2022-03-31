@@ -1,5 +1,5 @@
 import Link from "next/link"
-import styles from "./layout.module.css"
+import styles from "styles/layout.module.css"
 import Image from "next/image"
 
 export default function Layout({ children }) {
@@ -15,7 +15,7 @@ export default function Layout({ children }) {
             <a className={styles.navbarLink}>Меню</a>
           </Link>
 
-          <Link href="/">
+          <Link href="/contact">
             <a className={styles.navbarLink}>Контакты</a>
           </Link>
           
@@ -25,6 +25,7 @@ export default function Layout({ children }) {
 
           <div className={styles.navbarImages}>
             <div className={styles.navbarImage}>
+            <Link href="/shoppingCart" passHref>
               <Image 
                 priority
                 src="/images/shopping-cart-icon.png"
@@ -33,6 +34,7 @@ export default function Layout({ children }) {
                 width={30}
                 alt="login"
               />
+              </Link>
             </div>
 
             <div className={styles.navbarImage}>
