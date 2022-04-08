@@ -1,8 +1,6 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import Layout from '../components/layout'
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import Layout from '../src/components/layout';
 
 export default function Home() {
   return (
@@ -15,14 +13,10 @@ export default function Home() {
         </Head>
 
         <main className={styles.main}>
-          <h3 className={styles.h3}>
-            кафе
-          </h3>
-          <h1 className={styles.title}>
-            САМОВАР
-          </h1>
+          <h3 className={styles.h3}>кафе</h3>
+          <h1 className={styles.title}>САМОВАР</h1>
         </main>
       </div>
     </Layout>
-  )
+  );
 }

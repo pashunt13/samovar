@@ -1,38 +1,43 @@
-import Layout from "../components/layout"
-import styles from "../styles/menu.module.css"
-import Image from "next/image"
-import { Item } from "../src/entity/Item";
+import Image from 'next/image';
 import { instanceToPlain } from 'class-transformer';
-import { prepareConnection } from 'src/db'
+import { prepareConnection } from 'src/db';
+import { Item } from 'src/models';
+import { Item as ItemEntity } from '../src/entity/Item';
+import Layout from '../src/components/layout';
+import ToCart from '../src/components/Menu/ToCart';
+import styles from '../styles/menu.module.css';
+
+interface MenuProps {
+  items: Item[];
+}
 
 export async function getServerSideProps() {
   try {
-    
     const connection = await prepareConnection();
-    const item = new Item();
-    const itemRepository = connection.getRepository(Item);
+    const item = new ItemEntity();
+    const itemRepository = connection.getRepository(ItemEntity);
     const allItems = await itemRepository.find();
 
-    console.log('\nallItems in  getStaticProps(): ', allItems, '\n');
+    // console.log('\nallItems in  getStaticProps(): ', allItems, '\n');
     return {
       props: {
-        allItems: instanceToPlain(allItems)
-      }
-    }
+        items: instanceToPlain<Item[]>(allItems),
+      },
+    };
   } catch (error) {
-     console.log('ERRRRROOOOOORRRRR: ' + error); 
+    console.log('ERRRRROOOOOORRRRR: ' + error);
   }
 }
 
-export default function Menu({ allItems }) {
+export default function Menu({ items }: MenuProps) {
   return (
     <Layout>
       <div className={styles.container}>
         <h1 className={styles.title}>Меню</h1>
         <ul className={styles.grid}>
-          {allItems.map((item) => (
+          {items.map((item) => (
             <li className={styles.listItem} key={item.id}>
-              <Image 
+              <Image
                 priority
                 src="/images/no_image.png"
                 className={styles.menuImage}
@@ -44,25 +49,12 @@ export default function Menu({ allItems }) {
               <div className={styles.menuItem}>
                 <div className={styles.menuItemTitle}>{item.title}</div>
                 <div className={styles.menuItemPrice}>{item.price}р.</div>
-
-                {/* <input
-                  className={styles.menuItemQuantity} 
-                  type="number"
-                  min={1}
-                  max={99}
-                />
-                <div className={styles.unit}>шт.</div> */}
-
-                <input 
-                  className={styles.inCart} 
-                  type="button"
-                  value={'В корзину'}
-                />
+                <ToCart item={item} />
               </div>
             </li>
           ))}
         </ul>
       </div>
     </Layout>
-  )
+  );
 }

@@ -2,6 +2,10 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { Item } from "./entity/Item";
 import { getConnection } from "typeorm";
+import { Category } from "./entity/Category";
+import { BasketItem } from "./entity/BasketItem";
+import { Orders } from "./entity/Orders";
+import { Users } from "./entity/Users";
 
 let connection = null;
 
@@ -20,13 +24,17 @@ export async function prepareConnection() {
     // wait for new default connection
     return connection = await createConnection({
       type: "postgres",
-      host: "172.20.176.1",
+      host: "host",
       port: 5432,
       username: "postgres",
       password: "postgres",
       database: "samovarDB",
       entities: [
-        Item
+        Item,
+        Category,
+        BasketItem,
+        Orders,
+        Users
       ],
     });
 }
