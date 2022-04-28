@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .header {
   border-bottom: 1px solid #eaeaea;
   color: black;
@@ -28,4 +34,23 @@
 
 .borderCircle {
   border-radius: 9999px;
+}
+
+.footer {
+  display: flex;
+  height: 100px;
+  padding: 2rem 0;
+  margin-top: auto;
+  /* border-top: 1px solid #eaeaea; */
+  justify-content: center;
+  align-items: center;
+  color: #eaeaea;
+  background-color: #222;
+}
+
+.footer a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
 }

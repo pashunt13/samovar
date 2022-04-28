@@ -26,22 +26,26 @@ const ItemsList = () => {
 
   if (basketItems.length === 0) {
     return (
-      <Image
-        priority
-        src="/images/yourCartIsEmpty.png"
-        className={styles.yourCartIsEmpty}
-        height={324}
-        width={412}
-        alt="yourCartIsEmpty"
-      />
+      <>
+        <div className={styles.title}>Корзина</div>
+        <Image
+          priority
+          src="/images/yourCartIsEmpty.png"
+          className={styles.yourCartIsEmpty}
+          height={260}
+          width={410}
+          alt="yourCartIsEmpty"
+        />
+      </>
     );
   }
 
   return (
     <>
+      <div className={styles.title}>Корзина</div>
       {basketItems.map((item) => (
         <li className={styles.listItem} key={item.id}>
-          <div className={styles.title}>{item.title}</div>
+          <div className={styles.itemTitle}>{item.title}</div>
           <Counter 
             item={item} 
             onRemove={handleRemove} 

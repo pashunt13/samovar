@@ -1,0 +1,54 @@
+.container {
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+  max-width: 60%;
+}
+
+.title {
+  margin: 1rem 6%;
+  line-height: 1.5;
+  text-align: left;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.facadeImage {
+  margin: auto;
+  width: 30%;
+}
+
+.grid {
+  margin: auto 10%;
+  display: flex;
+  box-sizing: content-box;
+}
+
+.list {
+  margin: auto;
+  width: 70%;
+}
+
+.listItem {
+  margin: 2rem;
+}
+
+.itemTitle {
+  font-weight: bold;
+  position: absolute;
+  text-align: left;
+}
+
+.itemValue {
+  text-align: right;
+}
+
+.map {
+  position: relative;
+  margin: 2rem auto;
+  width: 90%;
+  height: 500px;
+  border: 0;
+  text-align: center;
+  overflow: hidden;
+}
