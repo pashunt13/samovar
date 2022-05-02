@@ -6,21 +6,22 @@
 .main {
   min-height: 100vh;
   padding: 4rem 0;
-  flex: 1;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
   background-image: url('../public/images/matreshka.jpg');
+  background-size: cover;
 }
 
 .footer {
   display: flex;
-  flex: 1;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+  color: #eaeaea;
+  background-color: rgba(40, 40, 40, 40);
 }
 
 .footer a {
