@@ -14,11 +14,9 @@ interface MenuProps {
 export async function getServerSideProps() {
   try {
     const connection = await prepareConnection();
-    const item = new ItemEntity();
     const itemRepository = connection.getRepository(ItemEntity);
     const allItems = await itemRepository.find();
 
-    // console.log('\nallItems in  getStaticProps(): ', allItems, '\n');
     return {
       props: {
         items: instanceToPlain<Item[]>(allItems),

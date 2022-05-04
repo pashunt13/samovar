@@ -6,11 +6,13 @@ export interface Item {
   // ...
 }
 
-export interface BasketItem extends Item {
-  quantity?: number;
+export interface BasketItem {
+  id: number;
+  item: Item;
+  quantity: number;
 }
 
 export interface AppContextModel {
-  basketItems?: BasketItem[],
-  setBasketItems?: Function, 
+  basketItems?: BasketItem[];
+  setBasketItems?: Function;
 }
