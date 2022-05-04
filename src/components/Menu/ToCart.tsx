@@ -16,12 +16,17 @@ export default function ToCart({ item }: ToCartProps) {
   const [basketItems, setBasketItems] = useState([]);
 
   useEffect(() => {
-    // const requestOptions = {
-    //   method: 'PUT',
-    //   headers: { 'Content-Type': 'application/json;charset=utf-8' },
-    //   body: JSON.stringify({ item })
-    // };
-    fetch('http://localhost:3000/basketItem/')
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json;charset=utf-8' },
+      body: JSON.stringify({ item })
+    };
+    fetch('http://localhost:3000/api/basketItem/', requestOptions)
+      .then(res => res.json())
+      .then(result => JSON.stringify({ }))
+
+
+    fetch('http://localhost:3000/api/someAPI')
       .then(res => res.json())
       .then(result => JSON.stringify(result))
   })

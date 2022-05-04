@@ -24,12 +24,10 @@ export async function getServerSideProps() {
   }
 }
 
-const gg = [{ id: 1, title: 'nedoprogrammist'}]
-
 export default function handler(
   req: NextApiRequest, 
   res: NextApiResponse, 
   basketItem: ApiProps
 ) {
-  res.status(200).json(gg);
+  res.status(200).json(basketItem);
 }

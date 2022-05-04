@@ -21,7 +21,7 @@ export default function basketItemHandler(
   switch (method) {
     case 'GET':
       // Get data from your database
-      res.status(200).json({ id: 1, title: 'nedoprogrammist'})
+      res.status(200).json({ basketItem: basketItem })
       break
     case 'PUT':
       // Update or create data in your database
