@@ -17,18 +17,18 @@ export default function ToCart({ item }: ToCartProps) {
 
   useEffect(() => {
     const requestOptions = {
-      method: 'PUT',
+      method: 'POST',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
-      body: JSON.stringify({ item })
+      body: JSON.stringify(item)
     };
-    fetch('http://localhost:3000/api/basketItem/', requestOptions)
+    fetch('http://localhost:3000/api/basketItem', requestOptions)
       .then(res => res.json())
-      .then(result => JSON.stringify({ }))
+      .then(data => setBasketItems([...basketItems, item]))
 
 
-    fetch('http://localhost:3000/api/someAPI')
-      .then(res => res.json())
-      .then(result => JSON.stringify(result))
+    // fetch('http://localhost:3000/api/basketItem')
+    //   .then(res => res.json())
+    //   .then(result => JSON.stringify(result))
   })
 
   function addToCartHandler() {
