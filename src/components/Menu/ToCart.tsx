@@ -15,31 +15,26 @@ export default function ToCart({ item }: ToCartProps) {
   // const {basketItems, setBasketItems} = useAppContext();
   const [basketItems, setBasketItems] = useState([]);
 
-  useEffect(() => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json;charset=utf-8' },
-      body: JSON.stringify(item)
-    };
-    fetch('http://localhost:3000/api/basketItem', requestOptions)
-      .then(res => res.json())
-      .then(data => setBasketItems([...basketItems, item]))
-
-
-    // fetch('http://localhost:3000/api/basketItem')
-    //   .then(res => res.json())
-    //   .then(result => JSON.stringify(result))
-  })
-
-  function addToCartHandler() {
+  const addToCartHandler = async () => {
     if (isClicked) return;
 
     setIsClicked(true);
     setButtonClass(styles.inCart);
     setButtonValue('В корзине');
 
+    const response = await fetch('/api/basketItem', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(item.id),
+    });
+    const data = await response.json();
+    console.log(data);
+
     // return setBasketItems([...basketItems, item]);
-  }
+  };
 
   return (
     <input
