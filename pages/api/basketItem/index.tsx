@@ -7,7 +7,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const basketItemRepository = connection.getRepository(BasketItemEntity);
 
   if (req.method == 'GET') {
-    const basketItems = await basketItemRepository.find();
+    // const basketItems = await basketItemRepository.find({
+    //   relations: {
+    //     item: true,
+    //   },
+    // });
+    const basketItems = await connection
+      .getRepository(BasketItemEntity)
+      .createQueryBuilder('BasketItem')
+      .leftJoinAndSelect('BasketItem.item', 'Item')
+      .getMany();
     res.status(200).json(basketItems);
   } else if (req.method == 'POST') {
     const item = req.body;
