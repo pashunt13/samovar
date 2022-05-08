@@ -2,44 +2,14 @@ import styles from 'styles/shoppingCart.module.css';
 import Counter from './Counter';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { prepareConnection } from 'src/db';
-import { BasketItem as BasketItemEntity } from 'src/entity/BasketItem';
 import { BasketItem } from 'src/models';
-import { instanceToPlain } from 'class-transformer';
 
 interface ItemsListProps {
-  totalCount: Function;
-  basketItems: BasketItem[];
+  items: BasketItem[];
 }
 
-export async function getServerSideProps() {
-  try {
-    const connection = await prepareConnection();
-    const items = await connection
-      .getRepository(BasketItemEntity)
-      .createQueryBuilder('BasketItem')
-      .leftJoinAndSelect('BasketItem.item', 'Item')
-      .getMany();
-    console.log('items');
-    console.log(items);
-    return {
-      props: {
-        basketItems: instanceToPlain<BasketItem[]>(items),
-      },
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-const ItemsList = ({ basketItems }: ItemsListProps) => {
-  // const [basketItems, setBasketItems] = useState(items);
-
-  // console.log('items');
-  // console.log(items);
-
-  console.log('basketItems');
-  console.log(basketItems);
+const ItemsList = ({ items }: ItemsListProps) => {
+  const [basketItems, setBasketItems] = useState(items);
 
   const [total, setTotal] = useState(0);
 
@@ -65,24 +35,24 @@ const ItemsList = ({ basketItems }: ItemsListProps) => {
 
   const handleRemove = (id: number) => {
     const newList = basketItems.filter((basketItem) => basketItem.id !== id);
-    // return setBasketItems(newList);
+    return setBasketItems(newList);
   };
 
-  // if (basketItems.length === 0) {
-  //   return (
-  //     <>
-  //       <div className={styles.title}>Корзина</div>
-  //       <Image
-  //         priority
-  //         src="/images/yourCartIsEmpty.png"
-  //         className={styles.yourCartIsEmpty}
-  //         height={260}
-  //         width={410}
-  //         alt="yourCartIsEmpty"
-  //       />
-  //     </>
-  //   );
-  // }
+  if (basketItems.length === 0) {
+    return (
+      <>
+        <div className={styles.title}>Корзина</div>
+        <Image
+          priority
+          src="/images/yourCartIsEmpty.png"
+          className={styles.yourCartIsEmpty}
+          height={260}
+          width={410}
+          alt="yourCartIsEmpty"
+        />
+      </>
+    );
+  }
 
   return (
     <>
