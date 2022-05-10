@@ -6,6 +6,11 @@ import { BasketItem } from 'src/models';
 const MIN_ITEMS = 1;
 const MAX_ITEMS = 9;
 
+const HEADERS = {
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
+};
+
 interface CounterProps {
   basketItem: BasketItem;
   onRemove: Function;
@@ -22,15 +27,11 @@ const Counter = ({ basketItem, onRemove, totalCount }: CounterProps) => {
     try {
       const response = await fetch('/api/basketItem/' + basketItem.id, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: HEADERS,
         body: JSON.stringify(counter - 1),
       });
       const data = await response.json();
       console.log(data);
-      return data;
     } catch (error) {
       console.log(error);
     }
@@ -43,41 +44,17 @@ const Counter = ({ basketItem, onRemove, totalCount }: CounterProps) => {
     try {
       const response = await fetch('/api/basketItem/' + basketItem.id, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: HEADERS,
         body: JSON.stringify(counter + 1),
       });
       const data = await response.json();
       console.log(data);
-      return data;
     } catch (error) {
       console.log(error);
     }
     setCounter(counter + 1);
     totalCount(itemSum);
   };
-
-  // useEffect(() => {
-  //   const dataFetch = async (quantity: number) => {
-  //     try {
-  //       const response = await fetch('/api/basketItem/'+ basketItem.id, {
-  //         method: 'PUT',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Accept: 'application/json',
-  //         },
-  //         body: JSON.stringify(quantity),
-  //       });
-  //       const data = await response.json();
-  //       console.log(data);
-  //       return data;
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // })
 
   return (
     <div className={styles.rightPosition}>

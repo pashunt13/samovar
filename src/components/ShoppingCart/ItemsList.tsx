@@ -41,8 +41,21 @@ const ItemsList = ({ items }: ItemsListProps) => {
   //   dataFetch();
   // }, []);
 
-  const handleRemove = (id: number) => {
+  const handleRemove = async (id: number) => {
     const newList = basketItems.filter((basketItem) => basketItem.id !== id);
+    try {
+      const response = await fetch('/api/basketItem/' + id, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
     return setBasketItems(newList);
   };
 

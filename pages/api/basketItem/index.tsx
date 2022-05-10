@@ -20,7 +20,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(basketItems);
   } else if (req.method == 'POST') {
     const item = req.body;
-    const basketItems = await basketItemRepository.save({ item });
+    const quantity = 1;
+    const basketItems = await basketItemRepository.save({ item, quantity });
 
     res.status(201).json(basketItems);
   }

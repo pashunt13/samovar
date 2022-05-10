@@ -8,8 +8,8 @@ export interface Item {
 
 export interface BasketItem {
   id: number;
-  item?: Item;
-  quantity?: number;
+  item: Item;
+  quantity: number;
 }
 
 export interface AppContextModel {

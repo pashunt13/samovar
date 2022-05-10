@@ -24,13 +24,13 @@ export default function ToCart({ item }: ToCartProps) {
       });
       const data = await response.json();
       console.log(data);
+
+      setIsClicked(true);
+      setButtonClass(styles.inCart);
+      setButtonValue('В корзине');
     } catch (error) {
       console.log(error);
     }
-
-    setIsClicked(true);
-    setButtonClass(styles.inCart);
-    setButtonValue('В корзине');
   };
 
   return (
