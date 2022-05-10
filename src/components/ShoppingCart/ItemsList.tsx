@@ -19,28 +19,6 @@ const ItemsList = ({ items }: ItemsListProps) => {
     return setTotal(newTotal);
   };
 
-  // useEffect(() => {
-  //   const totalCount = (itemSum: number) => {
-  //     const newTotal = total + itemSum;
-  //     console.log(newTotal);
-  //     return setTotal(newTotal);
-  //   };
-  // })
-
-  // useEffect(() => {
-  //   const dataFetch = async () => {
-  //     try {
-  //       const response = await fetch('/api/basketItem');
-  //       const data = await response.json();
-  //       console.log(data);
-  //       setBasketItems(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   dataFetch();
-  // }, []);
-
   const handleRemove = async (id: number) => {
     const newList = basketItems.filter((basketItem) => basketItem.id !== id);
     try {
