@@ -20,6 +20,14 @@ const ItemsList = ({ items }: ItemsListProps) => {
   };
 
   // useEffect(() => {
+  //   const totalCount = (itemSum: number) => {
+  //     const newTotal = total + itemSum;
+  //     console.log(newTotal);
+  //     return setTotal(newTotal);
+  //   };
+  // })
+
+  // useEffect(() => {
   //   const dataFetch = async () => {
   //     try {
   //       const response = await fetch('/api/basketItem');

@@ -1,6 +1,6 @@
 import styles from 'styles/shoppingCart.module.css';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BasketItem } from 'src/models';
 
 const MIN_ITEMS = 1;
@@ -15,18 +15,69 @@ interface CounterProps {
 const Counter = ({ basketItem, onRemove, totalCount }: CounterProps) => {
   const [counter, setCounter] = useState(basketItem.quantity);
   const itemSum = basketItem.item.price * counter;
+  // totalCount(itemSum);
 
-  const decrease = () => {
+  const decrease = async () => {
     if (counter == MIN_ITEMS) return;
+    try {
+      const response = await fetch('/api/basketItem/' + basketItem.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(counter - 1),
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
     setCounter(counter - 1);
     totalCount(-itemSum);
   };
 
-  const increase = () => {
+  const increase = async () => {
     if (counter == MAX_ITEMS) return;
+    try {
+      const response = await fetch('/api/basketItem/' + basketItem.id, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(counter + 1),
+      });
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
     setCounter(counter + 1);
     totalCount(itemSum);
   };
+
+  // useEffect(() => {
+  //   const dataFetch = async (quantity: number) => {
+  //     try {
+  //       const response = await fetch('/api/basketItem/'+ basketItem.id, {
+  //         method: 'PUT',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Accept: 'application/json',
+  //         },
+  //         body: JSON.stringify(quantity),
+  //       });
+  //       const data = await response.json();
+  //       console.log(data);
+  //       return data;
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // })
 
   return (
     <div className={styles.rightPosition}>
