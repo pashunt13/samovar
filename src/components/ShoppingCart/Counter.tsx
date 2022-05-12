@@ -20,7 +20,10 @@ interface CounterProps {
 const Counter = ({ basketItem, onRemove, totalCount }: CounterProps) => {
   const [counter, setCounter] = useState(basketItem.quantity);
   const itemSum = basketItem.item.price * counter;
-  // totalCount(itemSum);
+
+  useEffect(() => {
+    totalCount(itemSum);
+  }, [itemSum]);
 
   const decrease = async () => {
     if (counter == MIN_ITEMS) return;
@@ -31,12 +34,11 @@ const Counter = ({ basketItem, onRemove, totalCount }: CounterProps) => {
         body: JSON.stringify(counter - 1),
       });
       const data = await response.json();
-      console.log(data);
+      setCounter(counter - 1);
+      totalCount(-basketItem.item.price);
     } catch (error) {
       console.log(error);
     }
-    setCounter(counter - 1);
-    totalCount(-itemSum);
   };
 
   const increase = async () => {
@@ -48,12 +50,11 @@ const Counter = ({ basketItem, onRemove, totalCount }: CounterProps) => {
         body: JSON.stringify(counter + 1),
       });
       const data = await response.json();
-      console.log(data);
+      setCounter(counter + 1);
+      totalCount(basketItem.item.price);
     } catch (error) {
       console.log(error);
     }
-    setCounter(counter + 1);
-    totalCount(itemSum);
   };
 
   return (

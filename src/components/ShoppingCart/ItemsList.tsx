@@ -20,7 +20,6 @@ const ItemsList = ({ items }: ItemsListProps) => {
   };
 
   const handleRemove = async (id: number) => {
-    const newList = basketItems.filter((basketItem) => basketItem.id !== id);
     try {
       const response = await fetch('/api/basketItem/' + id, {
         method: 'DELETE',
@@ -30,11 +29,12 @@ const ItemsList = ({ items }: ItemsListProps) => {
         },
       });
       const data = await response.json();
-      console.log(data);
+
+      const newList = basketItems.filter((basketItem) => basketItem.id !== id);
+      return setBasketItems(newList);
     } catch (error) {
       console.log(error);
     }
-    return setBasketItems(newList);
   };
 
   if (basketItems.length === 0) {

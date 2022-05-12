@@ -9,17 +9,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method == 'PUT') {
     const query = req.query;
     const quantity = req.body;
-    const basketItems = basketItemRepository.save({
+    const basketItem = basketItemRepository.save({
       id: Number(query.id),
       quantity: quantity,
     });
-    res.status(201).json(basketItems);
+    res.status(201).json(basketItem);
   } else if (req.method == 'DELETE') {
     const query = req.query;
-    const basketItems = await basketItemRepository.delete({
+    const basketItem = await basketItemRepository.delete({
       id: Number(query.id),
     });
-    res.status(201).json(basketItems);
+    res.status(201).json(basketItem);
   }
 };
 

@@ -23,7 +23,6 @@ export default function ToCart({ item }: ToCartProps) {
         body: JSON.stringify(item.id),
       });
       const data = await response.json();
-      console.log(data);
 
       setIsClicked(true);
       setButtonClass(styles.inCart);
