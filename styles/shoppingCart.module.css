@@ -87,13 +87,6 @@
   display: flex;
 }
 
-/* .total {
-  display: inline-block;
-  vertical-align: top;
-  width: 370px;
-  padding-left: 20px;
-} */
-
 .totalTitle {
   margin: auto 10px auto auto;
 }
@@ -106,4 +99,20 @@
 .yourCartIsEmpty {
   margin: auto auto 50% auto;
   text-align: center;
+}
+
+.order {
+  background: linear-gradient(#666, #000);
+  border: 2px solid;
+  border-radius: 12px;
+  font-family: inherit;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 40px;
+}
+
+.order:hover {
+  background: linear-gradient(#000, #666);
 }
