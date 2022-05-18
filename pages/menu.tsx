@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Head from 'next/head';
 import { instanceToPlain } from 'class-transformer';
 import { prepareConnection } from 'src/db';
 import { Item } from 'src/models';
@@ -30,6 +31,15 @@ export async function getServerSideProps() {
 export default function Menu({ items }: MenuProps) {
   return (
     <Layout>
+      <Head>
+        <title>Меню</title>
+        <meta
+          name="description"
+          content="В кафе Самовар вы найдете широкий ассортмент блюд русской кухни и не только: от домашней картошки до уток в медовом соусе"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className={styles.container}>
         <h1 className={styles.title}>Меню</h1>
         <ul className={styles.grid}>

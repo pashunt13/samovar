@@ -23,13 +23,9 @@
   text-decoration: none;
 }
 
-.navbarImages {
+.navbarCartImage {
   float: right;
-}
-
-.navbarImage {
-  padding-left: 10px;
-  float: left;
+  padding-right: 10px;
 }
 
 .borderCircle {

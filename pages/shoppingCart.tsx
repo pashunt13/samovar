@@ -1,4 +1,5 @@
 import Layout from '../src/components/layout';
+import Head from 'next/head';
 import styles from '../styles/shoppingCart.module.css';
 import ItemsList from '../src/components/ShoppingCart/ItemsList';
 import { prepareConnection } from 'src/db';
@@ -31,6 +32,15 @@ export async function getServerSideProps() {
 export default function ShoppingCart({ items }: ShoppingCartProps) {
   return (
     <Layout>
+      <Head>
+        <title>Корзина</title>
+        <meta
+          name="description"
+          content="Вы можете заказать у нас понравившиеся блюда онлайн. Быстро и вкусно"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className={styles.container}>
         <ItemsList items={items} />
       </div>
