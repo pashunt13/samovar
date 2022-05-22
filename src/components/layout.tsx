@@ -28,41 +28,28 @@ export default function Layout({ children }: LayoutProps) {
               <a className={styles.navbarLink}>О нас</a>
             </Link>
 
-            <div className={styles.navbarImages}>
-              <div className={styles.navbarImage}>
-                <Link href="/shoppingCart" passHref>
-                  <Image
-                    priority
-                    src="/images/shopping-cart-icon.png"
-                    className={styles.borderCircle}
-                    height={30}
-                    width={30}
-                    alt="login"
-                  />
-                </Link>
-              </div>
-
-              <div className={styles.navbarImage}>
+            <div className={styles.navbarCartImage}>
+              <Link href="/shoppingCart" passHref>
                 <Image
                   priority
-                  src="/images/login-icon.png"
-                  className={styles.borderCircle}
+                  src="/images/shopping-cart-icon.png"
                   height={30}
                   width={30}
                   alt="login"
                 />
-              </div>
+              </Link>
             </div>
           </nav>
         </header>
         <main>{children}</main>
         <footer className={styles.footer}>
-          <a
+          {/* <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
-          >
-            Powered by{' '}
+          > */}
+          ©Кафе Самовар 2022
+          {/* Powered by{' '}
             <span className={styles.logo}>
               <Image
                 src="/vercel.svg"
@@ -71,7 +58,7 @@ export default function Layout({ children }: LayoutProps) {
                 height={16}
               />
             </span>
-          </a>
+          </a>*/}
         </footer>
       </div>
     </>

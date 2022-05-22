@@ -22,7 +22,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const item = req.body;
     const quantity = 1;
     const basketItems = await basketItemRepository.save({ item, quantity });
-
     res.status(201).json(basketItems);
   }
 };

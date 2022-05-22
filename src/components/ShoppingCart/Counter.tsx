@@ -1,6 +1,6 @@
 import styles from 'styles/shoppingCart.module.css';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BasketItem } from 'src/models';
 
 const MIN_ITEMS = 1;
@@ -29,7 +29,7 @@ const Counter = ({ basketItem, onRemove, updateTotal }: CounterProps) => {
         headers: HEADERS,
         body: JSON.stringify(counter - 1),
       });
-      const data = await response.json();
+
       setCounter(counter - 1);
       updateTotal(-basketItem.item.price);
     } catch (error) {
@@ -45,7 +45,7 @@ const Counter = ({ basketItem, onRemove, updateTotal }: CounterProps) => {
         headers: HEADERS,
         body: JSON.stringify(counter + 1),
       });
-      const data = await response.json();
+
       setCounter(counter + 1);
       updateTotal(basketItem.item.price);
     } catch (error) {

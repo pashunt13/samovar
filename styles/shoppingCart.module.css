@@ -17,6 +17,7 @@
   margin: 20px auto;
   display: flex;
   text-align: left;
+  align-items: center;
   color: inherit;
   text-decoration: none;
   border: 1px solid #eaeaea;
@@ -80,10 +81,10 @@
 }
 
 .total {
-  max-width: 75%;
+  max-width: 800px;
   margin: auto;
   font-weight: 700;
-  padding: 1em;
+  padding: 1em 0;
   display: flex;
 }
 
