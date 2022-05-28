@@ -1,10 +1,12 @@
+@import url(https://allfont.ru/allfont.css?fonts=cyrillicold);
+
 html,
 body {
   padding: 0;
   margin: 0;
   height: 100%;
-  font-family: cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: Comic sans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
   font-size: 18px;
 }
@@ -14,7 +16,7 @@ a {
   text-decoration: none;
 }
 
-a:hover{
+a:hover {
   text-decoration: underline;
   color: #999;
 }

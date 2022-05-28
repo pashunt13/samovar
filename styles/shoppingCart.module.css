@@ -117,3 +117,13 @@
 .order:hover {
   background: linear-gradient(#000, #666);
 }
+
+@media (max-width: 600px) {
+  .container {
+    width: 100%;
+  }
+  .listItem {
+    width: 300px;
+    flex-direction: column;
+  }
+}
