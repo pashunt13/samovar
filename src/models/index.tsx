@@ -16,3 +16,11 @@ export interface AppContextModel {
   basketItems?: BasketItem[];
   setBasketItems?: Function;
 }
+
+declare module 'iron-session' {
+  interface IronSessionData {
+    user?: {
+      id: number;
+    };
+  }
+}

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { BasketItem } from 'src/models';
 import Order from './Order';
+import { HEADERS } from 'src/consts';
 
 interface ItemsListProps {
   items: BasketItem[];
@@ -28,10 +29,7 @@ const ItemsList = ({ items }: ItemsListProps) => {
     try {
       const response = await fetch('/api/basketItem/' + id, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: HEADERS,
       });
 
       const newList = basketItems.filter((basketItem) => basketItem.id !== id);

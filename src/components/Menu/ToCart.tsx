@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Item } from 'src/models/index';
+import { HEADERS } from 'src/consts';
+import { Item } from 'src/models';
 import styles from 'styles/menu.module.css';
 
 interface ToCartProps {
@@ -16,10 +17,7 @@ export default function ToCart({ item }: ToCartProps) {
     try {
       const response = await fetch('/api/basketItem', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: HEADERS,
         body: JSON.stringify(item.id),
       });
       const data = await response.json();

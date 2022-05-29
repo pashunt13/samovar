@@ -38,5 +38,6 @@ export async function prepareConnection() {
       OrderedItem,
       User
     ],
+    logging: true
   });
 }

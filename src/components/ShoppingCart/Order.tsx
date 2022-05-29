@@ -2,6 +2,7 @@ import styles from 'styles/order.module.css';
 import ReactInputMask from 'react-input-mask';
 import { useState } from 'react';
 import { BasketItem } from 'src/models';
+import { HEADERS } from 'src/consts';
 
 interface OrderProps {
   active: boolean;
@@ -29,10 +30,7 @@ const Order = ({
     try {
       const response = await fetch('/api/order', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: HEADERS,
         body: JSON.stringify({ tel, email }),
       });
 
