@@ -1,0 +1,41 @@
+.container {
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+  max-width: 900px;
+}
+
+.title {
+  margin: 1rem 6%;
+  line-height: 1.5;
+  text-align: left;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.listTitles {
+  display: flex;
+  justify-content: left;
+}
+
+.listTitle {
+  margin: 13px;
+  text-align: left;
+  width: 200px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.listItem {
+  border-top: 1px solid #aeaeaa;
+  text-align: left;
+}
+
+.text {
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  height: 40px;
+  border: 1px solid #aeaeaa;
+  border-radius: 5px;
+}

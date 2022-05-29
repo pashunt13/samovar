@@ -16,3 +16,22 @@ export interface AppContextModel {
   basketItems?: BasketItem[];
   setBasketItems?: Function;
 }
+
+export interface User {
+  id: number;
+  tel: string;
+  email: string;
+}
+
+export interface Order {
+  id: number;
+  date: string;
+  user: User;
+}
+
+export interface OrderedItem {
+  id: number;
+  order: Order;
+  item: Item;
+  quantity: number;
+}
