@@ -37,10 +37,10 @@ const Orders = ({ orders }: OrdersProps) => {
         <div className={styles.listItem} key={order.id}>
           <Link href={'/admin/' + order.id}>
             <a>
-              <input className={styles.text} value={order.id} />
-              <input className={styles.text} value={order.date} />
-              <input className={styles.text} value={order.user.tel} />
-              <input className={styles.text} value={order.user.email} />
+              <div className={styles.text}>{order.id}</div>
+              <div className={styles.text}>{order.date}</div>
+              <div className={styles.text}>{order.user.tel}</div>
+              <div className={styles.text}>{order.user.email}</div>
             </a>
           </Link>
         </div>
