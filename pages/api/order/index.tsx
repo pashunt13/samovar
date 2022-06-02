@@ -4,8 +4,13 @@ import { User as UserEntity } from 'src/entity/User';
 import { Order as OrderEntity } from 'src/entity/Order';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { BasketItem } from 'src/models';
+import { withIronSessionApiRoute } from 'iron-session/next';
+import { SESSION_OPTIONS } from 'src/consts';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export default withIronSessionApiRoute(async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const connection = await prepareConnection();
   const basketItemRepository = connection.getRepository(BasketItemEntity);
   const userRepository = connection.getRepository(UserEntity);
@@ -15,10 +20,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .getRepository(BasketItemEntity)
     .createQueryBuilder('BasketItem')
     .leftJoinAndSelect('BasketItem.item', 'Item')
+    .leftJoinAndSelect('BasketItem.user', 'User')
+    .where('BasketItem.user = :id', { id: req.session.user })
     .getMany();
 
   const { tel, email } = req.body;
-  const user = await userRepository.save({ tel, email });
+  const user = await userRepository.save({
+    id: req.session.user,
+    tel,
+    email,
+  });
 
   const order = await orderRepository.save({
     date: new Date(),
@@ -26,13 +37,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     orderedItems: basketItems.map((basketItem: BasketItem) => {
       return {
         item: basketItem.item,
-        quantity: basketItem.quantity
+        quantity: basketItem.quantity,
       };
     }),
   });
 
-  const clearBasketItems = await basketItemRepository.delete({ user: null });
+  const clearBasketItems = await basketItemRepository.delete({
+    user: req.session.user,
+  });
   res.status(201).json(clearBasketItems);
-};
-
-export default handler;
+},
+SESSION_OPTIONS);
