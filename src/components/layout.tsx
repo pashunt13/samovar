@@ -20,7 +20,11 @@ export default function Layout({ children }: LayoutProps) {
               <a className={styles.navbarLink}>Меню</a>
             </Link>
 
-            <Link href="/contact">
+            <Link href="/shoppingCart">
+              <a className={styles.navbarLink}>Корзина</a>
+            </Link>
+
+            {/* <Link href="/contact">
               <a className={styles.navbarLink}>Контакты</a>
             </Link>
 
@@ -38,7 +42,7 @@ export default function Layout({ children }: LayoutProps) {
                   alt="login"
                 />
               </Link>
-            </div>
+            </div> */}
           </nav>
         </header>
         <main>{children}</main>

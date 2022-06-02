@@ -6,18 +6,38 @@ import { instanceToPlain } from 'class-transformer';
 import styles from 'styles/admin.module.css';
 
 interface OrderedItemProps {
-  orderedItems: OrderedItem[];
+  orderedItem: OrderedItem;
 }
 
-function Router() {
+// function Router() {
+//   const router = useRouter();
+//   const orderId = router.query.id;
+//   console.log(orderId);
+//   return orderId;
+// }
+
+// export async function getServerSideProps() {
+//   const orderId = Router();
+//   const connection = await prepareConnection();
+//   const orderedItems = await connection
+//     .getRepository(OrderedItemEntity)
+//     .createQueryBuilder('OrderedItem')
+//     .leftJoinAndSelect('OrderedItem.item', 'Item')
+//     .leftJoinAndSelect('OrderedItem.order', 'Order')
+//     .where('OrderedItem.order = :order', { order: orderId })
+//     .getMany();
+//   return {
+//     props: {
+//       orderedItems: instanceToPlain<OrderedItem[]>(orderedItems),
+//     },
+//   };
+// }
+
+const OrderedItems = async () => {
   const router = useRouter();
   const orderId = router.query.id;
   console.log(orderId);
-  return orderId;
-}
 
-export async function getServerSideProps() {
-  const orderId = Router();
   const connection = await prepareConnection();
   const orderedItems = await connection
     .getRepository(OrderedItemEntity)
@@ -26,26 +46,10 @@ export async function getServerSideProps() {
     .leftJoinAndSelect('OrderedItem.order', 'Order')
     .where('OrderedItem.order = :order', { order: orderId })
     .getMany();
-  return {
-    props: {
-      orderedItems: instanceToPlain<OrderedItem[]>(orderedItems),
-    },
-  };
-}
-
-const OrderedItems = ({ orderedItems }: OrderedItemProps) => {
-  // const connection = await prepareConnection();
-  // const orderedItems = await connection
-  //   .getRepository(OrderedItemEntity)
-  //   .createQueryBuilder('OrderedItem')
-  //   .leftJoinAndSelect('OrderedItem.item', 'Item')
-  //   .leftJoinAndSelect('OrderedItem.order', 'Order')
-  //   .where('OrderedItem.order = :order', { order: orderId })
-  //   .getMany();
 
   return (
     <>
-      {orderedItems.map((orderedItem) => (
+      {orderedItems.map(({ orderedItem }: OrderedItemProps) => (
         <div className={styles.listItem} key={orderedItem.id}>
           <input className={styles.text} value={orderedItem.item.title} />
           <input className={styles.text} value={orderedItem.quantity} />

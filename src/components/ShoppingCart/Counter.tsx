@@ -2,14 +2,7 @@ import styles from 'styles/shoppingCart.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
 import { BasketItem } from 'src/models';
-
-const MIN_ITEMS = 1;
-const MAX_ITEMS = 9;
-
-const HEADERS = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
-};
+import { MIN_ITEMS, MAX_ITEMS, HEADERS } from 'src/consts';
 
 interface CounterProps {
   basketItem: BasketItem;

@@ -35,3 +35,11 @@ export interface OrderedItem {
   item: Item;
   quantity: number;
 }
+
+declare module 'iron-session' {
+  interface IronSessionData {
+    user?: {
+      id: number;
+    };
+  }
+}
