@@ -28,6 +28,7 @@
 
 .listItem {
   border-radius: 10px;
+  display: flex;
   margin: 10px;
   border: 1px solid #eaeaea;
   text-align: left;
