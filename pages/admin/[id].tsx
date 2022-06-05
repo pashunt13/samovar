@@ -19,28 +19,25 @@ interface OrderedItemProps {
 export async function getServerSideProps(req: NextApiRequest) {
   const orderId = req.query.id;
   const connection = await prepareConnection();
-  const order = await connection
-    .getRepository(OrderEntity)
-    .createQueryBuilder('Order')
-    .where('Order.id = :id', { id: orderId })
-    .getOne();
+  const order = await connection.getRepository(OrderEntity).findOne({
+    relations: {
+      orderedItems: {
+        item: true,
+      },
+    },
+    where: {
+      id: orderId,
+    },
+  });
 
-  const orderedItems = await connection
-    .getRepository(OrderedItemEntity)
-    .createQueryBuilder('OrderedItem')
-    .leftJoinAndSelect('OrderedItem.item', 'Item')
-    .leftJoinAndSelect('OrderedItem.order', 'Order')
-    .where('OrderedItem.order = :order', { order: orderId })
-    .getMany();
   return {
     props: {
-      orderedItems: instanceToPlain<OrderedItem[]>(orderedItems),
       order: instanceToPlain<Order>(order),
     },
   };
 }
 
-const OrderedItems = ({ orderedItems, order }: OrderedItemProps) => {
+const OrderedItems = ({ order }: OrderedItemProps) => {
   const [orderStatus, setOrderStatus] = useState(order.status);
 
   const initialButtonClass = orderStatus
@@ -51,7 +48,7 @@ const OrderedItems = ({ orderedItems, order }: OrderedItemProps) => {
   const initialButtonValue = orderStatus ? 'Заказ закрыт' : 'Закрыть заказ';
   const [buttonValue, setButtonValue] = useState(initialButtonValue);
 
-  const handler = async () => {
+  const closeOrderHandler = async () => {
     if (orderStatus) {
       return;
     }
@@ -69,7 +66,7 @@ const OrderedItems = ({ orderedItems, order }: OrderedItemProps) => {
     }
   };
 
-  const total = orderedItems.reduce((previousValue, orderedItem) => {
+  const total = order.orderedItems.reduce((previousValue, orderedItem) => {
     return previousValue + orderedItem.quantity * orderedItem.item.price;
   }, 0);
 
@@ -89,7 +86,7 @@ const OrderedItems = ({ orderedItems, order }: OrderedItemProps) => {
           <div className={styles.listTitle}>Количество</div>
           <div className={styles.listTitle}>Стоимость</div>
         </div>
-        {orderedItems.map((orderedItem) => (
+        {order.orderedItems.map((orderedItem) => (
           <div className={styles.listItem} key={orderedItem.id}>
             <div className={styles.text}>{orderedItem.item.title}</div>
             <div className={styles.text}>{orderedItem.item.price}</div>
@@ -100,7 +97,7 @@ const OrderedItems = ({ orderedItems, order }: OrderedItemProps) => {
           </div>
         ))}
         <div className={styles.total}>
-          <button className={buttonClass} onClick={handler}>
+          <button className={buttonClass} onClick={closeOrderHandler}>
             {buttonValue}
           </button>
           <div className={styles.totalTitle}>Итого:</div>

@@ -28,6 +28,7 @@ export interface Order {
   date: string;
   user: User;
   status: boolean;
+  orderedItems: OrderedItem[];
 }
 
 export interface OrderedItem {

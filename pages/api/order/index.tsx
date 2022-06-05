@@ -17,13 +17,15 @@ export default withIronSessionApiRoute(async function handler(
   const orderRepository = connection.getRepository(OrderEntity);
 
   if (req.method == 'POST') {
-    const basketItems = await connection
-      .getRepository(BasketItemEntity)
-      .createQueryBuilder('BasketItem')
-      .leftJoinAndSelect('BasketItem.item', 'Item')
-      .leftJoinAndSelect('BasketItem.user', 'User')
-      .where('BasketItem.user = :id', { id: req.session.user })
-      .getMany();
+    const basketItems = await connection.getRepository(BasketItemEntity).find({
+      relations: {
+        item: true,
+        user: true,
+      },
+      where: {
+        id: req.session.user,
+      },
+    });
 
     const { tel, email } = req.body;
     const user = await userRepository.save({

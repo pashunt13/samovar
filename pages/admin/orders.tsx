@@ -12,12 +12,15 @@ interface OrdersProps {
 
 export async function getServerSideProps() {
   const connection = await prepareConnection();
-  const orders = await connection
-    .getRepository(OrderEntity)
-    .createQueryBuilder('Order')
-    .leftJoinAndSelect('Order.user', 'User')
-    .orderBy('Order.date', 'DESC')
-    .getMany();
+  const orders = await connection.getRepository(OrderEntity).find({
+    relations: {
+      user: true,
+    },
+    order: {
+      date: 'DESC',
+    },
+  });
+
   return {
     props: {
       orders: instanceToPlain<Order[]>(orders),
