@@ -16,7 +16,7 @@ export async function getServerSideProps() {
     .getRepository(OrderEntity)
     .createQueryBuilder('Order')
     .leftJoinAndSelect('Order.user', 'User')
-    .orderBy('Order.id')
+    .orderBy('Order.date', 'DESC')
     .getMany();
   return {
     props: {
@@ -49,17 +49,15 @@ const Orders = ({ orders }: OrdersProps) => {
             ? styles.closedOrder
             : styles.openedOrder;
           return (
-            <div className={styles.listItem} key={order.id}>
-              <Link href={'/admin/' + order.id}>
-                <a>
-                  <div className={styles.text}>{order.id}</div>
-                  <div className={styles.text}>{order.date}</div>
-                  <div className={styles.text}>{order.user.tel}</div>
-                  <div className={styles.text}>{order.user.email}</div>
-                  <div className={orderStatusColor}>{orderStatus}</div>
-                </a>
-              </Link>
-            </div>
+            <Link href={`/admin/${order.id}`} passHref key={order.id}>
+              <div className={styles.listItem}>
+                <div className={styles.text}>{order.id}</div>
+                <div className={styles.text}>{order.date}</div>
+                <div className={styles.text}>{order.user.tel}</div>
+                <div className={styles.text}>{order.user.email}</div>
+                <div className={orderStatusColor}>{orderStatus}</div>
+              </div>
+            </Link>
           );
         })}
       </div>

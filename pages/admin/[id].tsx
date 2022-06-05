@@ -43,28 +43,29 @@ export async function getServerSideProps(req: NextApiRequest) {
 const OrderedItems = ({ orderedItems, order }: OrderedItemProps) => {
   const [orderStatus, setOrderStatus] = useState(order.status);
 
-  const defaultButtonClass = orderStatus
+  const initialButtonClass = orderStatus
     ? styles.closedOrderButton
     : styles.openedOrderButton;
-  const [buttonClass, setButtonClass] = useState(defaultButtonClass);
+  const [buttonClass, setButtonClass] = useState(initialButtonClass);
 
-  const defaultButtonValue = orderStatus ? 'Заказ закрыт' : 'Закрыть заказ';
-  const [buttonValue, setButtonValue] = useState(defaultButtonValue);
+  const initialButtonValue = orderStatus ? 'Заказ закрыт' : 'Закрыть заказ';
+  const [buttonValue, setButtonValue] = useState(initialButtonValue);
 
   const handler = async () => {
-    if (!orderStatus) {
-      try {
-        const response = await fetch('/api/order', {
-          method: 'PUT',
-          headers: HEADERS,
-          body: JSON.stringify({ id: order.id, status: !orderStatus }),
-        });
-        setOrderStatus(true);
-        setButtonClass(styles.closedOrderButton);
-        setButtonValue('Заказ закрыт');
-      } catch (error) {
-        console.log(error);
-      }
+    if (orderStatus) {
+      return;
+    }
+    try {
+      const response = await fetch('/api/order', {
+        method: 'PUT',
+        headers: HEADERS,
+        body: JSON.stringify({ id: order.id, status: !orderStatus }),
+      });
+      setOrderStatus(true);
+      setButtonClass(styles.closedOrderButton);
+      setButtonValue('Заказ закрыт');
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -75,13 +76,13 @@ const OrderedItems = ({ orderedItems, order }: OrderedItemProps) => {
   return (
     <>
       <Head>
-        <title>Заказ: {order.id}</title>
-        <meta name="description" content="Просмотр всех заказов" />
+        <title>Заказ №{order.id}</title>
+        <meta name="description" content={`Просмотр заказа №${order.id}`} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className={styles.container}>
-        <div className={styles.title}>Заказ: {order.id}</div>
+        <div className={styles.title}>Заказ №{order.id}</div>
         <div className={styles.listTitles}>
           <div className={styles.listTitle}>Наименование</div>
           <div className={styles.listTitle}>Цена</div>
