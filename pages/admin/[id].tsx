@@ -1,6 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest } from 'next';
 import { prepareConnection } from 'src/db';
-import { OrderedItem as OrderedItemEntity } from 'src/entity/OrderedItem';
 import { Order as OrderEntity } from 'src/entity/Order';
 import { OrderedItem } from 'src/models';
 import { Order } from 'src/models';
@@ -9,6 +8,7 @@ import styles from 'styles/admin.module.css';
 import { useState } from 'react';
 import { HEADERS } from 'src/consts';
 import Head from 'next/head';
+import Link from 'next/link';
 
 interface OrderedItemProps {
   orderedItems: OrderedItem[];
@@ -104,6 +104,9 @@ const OrderedItems = ({ order }: OrderedItemProps) => {
           <div className={styles.totalValue}>{total}р.</div>
         </div>
       </div>
+      <Link href="/admin" passHref>
+        <button className={buttonClass}>Заказы</button>
+      </Link>
     </>
   );
 };

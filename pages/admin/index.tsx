@@ -5,6 +5,8 @@ import styles from 'styles/admin.module.css';
 import { instanceToPlain } from 'class-transformer';
 import Link from 'next/link';
 import Head from 'next/head';
+import { useState } from 'react';
+import Login from 'src/components/Admin/Login';
 
 interface OrdersProps {
   orders: Order[];
@@ -29,6 +31,9 @@ export async function getServerSideProps() {
 }
 
 const Orders = ({ orders }: OrdersProps) => {
+  const [isLogged, setIsLogged] = useState(false);
+
+  if (!isLogged) return <Login setIsLogged={setIsLogged} />;
   return (
     <>
       <Head>

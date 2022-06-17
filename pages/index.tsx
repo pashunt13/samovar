@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import Layout from '../src/components/layout';
+import Layout from '../src/components/Layout';
 import Image from 'next/image';
 import { Parallax } from 'react-parallax';
 import Slideshow from 'src/components/Home/Slideshow';

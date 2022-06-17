@@ -1,4 +1,4 @@
-import Layout from '../src/components/layout';
+import Layout from '../src/components/Layout';
 import Head from 'next/head';
 import styles from '../styles/shoppingCart.module.css';
 import ItemsList from '../src/components/ShoppingCart/ItemsList';

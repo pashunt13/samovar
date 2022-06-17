@@ -123,3 +123,108 @@
   width: 200px;
   height: 40px;
 }
+
+.modal {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.modalActive {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modalContent {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: white;
+  height: 350px;
+  width: 600px;
+}
+
+.title {
+  margin: 1rem 6%;
+  line-height: 1.5;
+  text-align: left;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.text {
+  margin: 1rem;
+  line-height: 1;
+  text-align: left;
+  font-weight: 400;
+}
+
+.input {
+  margin: 1rem;
+  height: 40px;
+  width: 250px;
+  border: 1px solid #aeaeae;
+  border-radius: 10px;
+  font-size: large;
+}
+
+.text {
+  padding: 8px;
+}
+
+.agreement {
+  margin: 20px;
+  color: #aeaeae;
+  font-size: 10px;
+}
+
+.confirm {
+  margin: 20px;
+  background: linear-gradient(#666, #000);
+  border: 2px solid;
+  border-radius: 12px;
+  font-family: inherit;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 40px;
+}
+
+.confirm:hover {
+  background: linear-gradient(#000, #666);
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+    padding: 0;
+  }
+}

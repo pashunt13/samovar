@@ -21,6 +21,8 @@ export interface User {
   id: number;
   tel: string;
   email: string;
+  login: string;
+  password: string;
 }
 
 export interface Order {
