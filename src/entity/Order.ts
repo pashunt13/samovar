@@ -13,6 +13,9 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders)
   user: User;
 
+  @Column("boolean")
+  status: boolean;
+
   @OneToMany(() => OrderedItem, (orderedItem) => orderedItem.order, {cascade: true})
   orderedItems: OrderedItem[];
 }

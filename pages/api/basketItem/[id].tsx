@@ -1,13 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prepareConnection } from 'src/db';
 import { BasketItem as BasketItemEntity } from 'src/entity/BasketItem';
-import { withIronSessionApiRoute } from 'iron-session/next';
-import { SESSION_OPTIONS } from 'src/consts';
 
-export default withIronSessionApiRoute(async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const connection = await prepareConnection();
   const basketItemRepository = connection.getRepository(BasketItemEntity);
 
@@ -26,5 +21,6 @@ export default withIronSessionApiRoute(async function handler(
     });
     res.status(201).json(basketItem);
   }
-},
-SESSION_OPTIONS);
+};
+
+export default handler;

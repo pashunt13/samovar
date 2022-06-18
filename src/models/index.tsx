@@ -17,6 +17,27 @@ export interface AppContextModel {
   setBasketItems?: Function;
 }
 
+export interface User {
+  id: number;
+  tel: string;
+  email: string;
+}
+
+export interface Order {
+  id: number;
+  date: string;
+  user: User;
+  status: boolean;
+  orderedItems: OrderedItem[];
+}
+
+export interface OrderedItem {
+  id: number;
+  order: Order;
+  item: Item;
+  quantity: number;
+}
+
 declare module 'iron-session' {
   interface IronSessionData {
     user?: {
