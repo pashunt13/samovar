@@ -22,7 +22,7 @@ export const getServerSideProps = withIronSessionSsr(
         .createQueryBuilder('BasketItem')
         .leftJoinAndSelect('BasketItem.item', 'Item')
         .leftJoinAndSelect('BasketItem.user', 'User')
-        .where('BasketItem.user = :id', { id: req.session.user })
+        .where('BasketItem.user = :id', { id: req.session.user.id })
         .getMany();
       return {
         props: {

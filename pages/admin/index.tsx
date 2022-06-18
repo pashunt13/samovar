@@ -5,35 +5,44 @@ import styles from 'styles/admin.module.css';
 import { instanceToPlain } from 'class-transformer';
 import Link from 'next/link';
 import Head from 'next/head';
-import { useState } from 'react';
-import Login from 'src/components/Admin/Login';
+import { withIronSessionSsr } from 'iron-session/next';
+import { SESSION_OPTIONS } from 'src/consts';
 
 interface OrdersProps {
   orders: Order[];
 }
 
-export async function getServerSideProps() {
-  const connection = await prepareConnection();
-  const orders = await connection.getRepository(OrderEntity).find({
-    relations: {
-      user: true,
-    },
-    order: {
-      date: 'DESC',
-    },
-  });
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps({ req }) {
+    if (!req.session.user.authorized) {
+      return {
+        redirect: {
+          destination: '/admin/login',
+          permanent: false,
+        },
+      };
+    }
 
-  return {
-    props: {
-      orders: instanceToPlain<Order[]>(orders),
-    },
-  };
-}
+    const connection = await prepareConnection();
+    const orders = await connection.getRepository(OrderEntity).find({
+      relations: {
+        user: true,
+      },
+      order: {
+        date: 'DESC',
+      },
+    });
+
+    return {
+      props: {
+        orders: instanceToPlain<Order[]>(orders),
+      },
+    };
+  },
+  SESSION_OPTIONS
+);
 
 const Orders = ({ orders }: OrdersProps) => {
-  const [isLogged, setIsLogged] = useState(false);
-
-  if (!isLogged) return <Login setIsLogged={setIsLogged} />;
   return (
     <>
       <Head>

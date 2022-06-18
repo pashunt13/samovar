@@ -6,7 +6,8 @@ import { Order } from 'src/models';
 import { instanceToPlain } from 'class-transformer';
 import styles from 'styles/admin.module.css';
 import { useState } from 'react';
-import { HEADERS } from 'src/consts';
+import { HEADERS, SESSION_OPTIONS } from 'src/consts';
+import { withIronSessionSsr } from 'iron-session/next';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -16,26 +17,38 @@ interface OrderedItemProps {
   order: Order;
 }
 
-export async function getServerSideProps(req: NextApiRequest) {
-  const orderId = req.query.id;
-  const connection = await prepareConnection();
-  const order = await connection.getRepository(OrderEntity).findOne({
-    relations: {
-      orderedItems: {
-        item: true,
-      },
-    },
-    where: {
-      id: orderId,
-    },
-  });
+export const getServerSideProps = withIronSessionSsr(
+  async function getServerSideProps(context) {
+    if (!context.req.session.user.authorized) {
+      return {
+        redirect: {
+          destination: '/admin/login',
+          permanent: false,
+        },
+      };
+    }
 
-  return {
-    props: {
-      order: instanceToPlain<Order>(order),
-    },
-  };
-}
+    const orderId = context.query.id;
+    const connection = await prepareConnection();
+    const order = await connection.getRepository(OrderEntity).findOne({
+      relations: {
+        orderedItems: {
+          item: true,
+        },
+      },
+      where: {
+        id: orderId,
+      },
+    });
+
+    return {
+      props: {
+        order: instanceToPlain<Order>(order),
+      },
+    };
+  },
+  SESSION_OPTIONS
+);
 
 const OrderedItems = ({ order }: OrderedItemProps) => {
   const [orderStatus, setOrderStatus] = useState(order.status);
@@ -104,9 +117,6 @@ const OrderedItems = ({ order }: OrderedItemProps) => {
           <div className={styles.totalValue}>{total}р.</div>
         </div>
       </div>
-      <Link href="/admin" passHref>
-        <button className={buttonClass}>Заказы</button>
-      </Link>
     </>
   );
 };
