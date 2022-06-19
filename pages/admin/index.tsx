@@ -12,35 +12,32 @@ interface OrdersProps {
   orders: Order[];
 }
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    if (!req.session.user.authorized) {
-      return {
-        redirect: {
-          destination: '/admin/login',
-          permanent: false,
-        },
-      };
-    }
-
-    const connection = await prepareConnection();
-    const orders = await connection.getRepository(OrderEntity).find({
-      relations: {
-        user: true,
-      },
-      order: {
-        date: 'DESC',
-      },
-    });
-
+export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
+  if (!req.session.authorized) {
     return {
-      props: {
-        orders: instanceToPlain<Order[]>(orders),
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
       },
     };
-  },
-  SESSION_OPTIONS
-);
+  }
+
+  const connection = await prepareConnection();
+  const orders = await connection.getRepository(OrderEntity).find({
+    relations: {
+      user: true,
+    },
+    order: {
+      date: 'DESC',
+    },
+  });
+
+  return {
+    props: {
+      orders: instanceToPlain<Order[]>(orders),
+    },
+  };
+}, SESSION_OPTIONS);
 
 const Orders = ({ orders }: OrdersProps) => {
   return (

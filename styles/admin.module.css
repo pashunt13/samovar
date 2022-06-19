@@ -124,22 +124,7 @@
   height: 40px;
 }
 
-.modal {
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-}
-
-.modalActive {
+.auth {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.4);
@@ -154,7 +139,7 @@
   pointer-events: all;
 }
 
-.modalContent {
+.content {
   padding: 20px;
   border-radius: 12px;
   background-color: white;
@@ -198,13 +183,7 @@
   padding: 8px;
 }
 
-.agreement {
-  margin: 20px;
-  color: #aeaeae;
-  font-size: 10px;
-}
-
-.confirm {
+.login {
   margin: 20px;
   background: linear-gradient(#666, #000);
   border: 2px solid;
@@ -217,7 +196,7 @@
   height: 40px;
 }
 
-.confirm:hover {
+.login:hover {
   background: linear-gradient(#000, #666);
 }
 

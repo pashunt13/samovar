@@ -17,10 +17,9 @@ export default withIronSessionApiRoute(async function handler(
   });
 
   if (user) {
-    req.session.user = {
-      id: user.id,
-      authorized: true,
-    };
+    req.session.user = user.id;
+    req.session.authorized = true;
+
     await req.session.save();
     res.status(200).json(true);
   } else {

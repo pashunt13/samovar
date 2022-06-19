@@ -22,12 +22,12 @@ export default withIronSessionApiRoute(async function handler(
       .createQueryBuilder('BasketItem')
       .leftJoinAndSelect('BasketItem.item', 'Item')
       .leftJoinAndSelect('BasketItem.user', 'User')
-      .where('BasketItem.user = :id', { id: req.session.user.id })
+      .where('BasketItem.user = :id', { id: req.session.user })
       .getMany();
 
     const { tel, email } = req.body;
     const user = await userRepository.save({
-      id: req.session.user.id,
+      id: req.session.user,
       tel,
       email,
     });
@@ -44,10 +44,8 @@ export default withIronSessionApiRoute(async function handler(
       }),
     });
 
-    console.log(basketItems);
-
     const clearBasketItems = await basketItemRepository.delete({
-      user: req.session.user.id,
+      user: req.session.user,
     });
 
     res.status(201).json(clearBasketItems);

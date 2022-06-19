@@ -17,38 +17,39 @@ interface OrderedItemProps {
   order: Order;
 }
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps(context) {
-    if (!context.req.session.user.authorized) {
-      return {
-        redirect: {
-          destination: '/admin/login',
-          permanent: false,
-        },
-      };
-    }
-
-    const orderId = context.query.id;
-    const connection = await prepareConnection();
-    const order = await connection.getRepository(OrderEntity).findOne({
-      relations: {
-        orderedItems: {
-          item: true,
-        },
-      },
-      where: {
-        id: orderId,
-      },
-    });
-
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  query,
+}) {
+  if (!req.session.authorized) {
     return {
-      props: {
-        order: instanceToPlain<Order>(order),
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
       },
     };
-  },
-  SESSION_OPTIONS
-);
+  }
+
+  const orderId = query.id;
+  const connection = await prepareConnection();
+  const order = await connection.getRepository(OrderEntity).findOne({
+    relations: {
+      orderedItems: {
+        item: true,
+      },
+    },
+    where: {
+      id: orderId,
+    },
+  });
+
+  return {
+    props: {
+      order: instanceToPlain<Order>(order),
+    },
+  };
+},
+SESSION_OPTIONS);
 
 const OrderedItems = ({ order }: OrderedItemProps) => {
   const [orderStatus, setOrderStatus] = useState(order.status);
