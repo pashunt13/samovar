@@ -1,14 +1,15 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest } from 'next';
 import { prepareConnection } from 'src/db';
-import { OrderedItem as OrderedItemEntity } from 'src/entity/OrderedItem';
 import { Order as OrderEntity } from 'src/entity/Order';
 import { OrderedItem } from 'src/models';
 import { Order } from 'src/models';
 import { instanceToPlain } from 'class-transformer';
 import styles from 'styles/admin.module.css';
 import { useState } from 'react';
-import { HEADERS } from 'src/consts';
+import { HEADERS, SESSION_OPTIONS } from 'src/consts';
+import { withIronSessionSsr } from 'iron-session/next';
 import Head from 'next/head';
+import Link from 'next/link';
 
 interface OrderedItemProps {
   orderedItems: OrderedItem[];
@@ -16,8 +17,20 @@ interface OrderedItemProps {
   order: Order;
 }
 
-export async function getServerSideProps(req: NextApiRequest) {
-  const orderId = req.query.id;
+export const getServerSideProps = withIronSessionSsr(async function ({
+  req,
+  query,
+}) {
+  if (!req.session.authorized) {
+    return {
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const orderId = query.id;
   const connection = await prepareConnection();
   const order = await connection.getRepository(OrderEntity).findOne({
     relations: {
@@ -35,7 +48,8 @@ export async function getServerSideProps(req: NextApiRequest) {
       order: instanceToPlain<Order>(order),
     },
   };
-}
+},
+SESSION_OPTIONS);
 
 const OrderedItems = ({ order }: OrderedItemProps) => {
   const [orderStatus, setOrderStatus] = useState(order.status);

@@ -5,12 +5,23 @@ import styles from 'styles/admin.module.css';
 import { instanceToPlain } from 'class-transformer';
 import Link from 'next/link';
 import Head from 'next/head';
+import { withIronSessionSsr } from 'iron-session/next';
+import { SESSION_OPTIONS } from 'src/consts';
 
 interface OrdersProps {
   orders: Order[];
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
+  if (!req.session.authorized) {
+    return {
+      redirect: {
+        destination: '/admin/login',
+        permanent: false,
+      },
+    };
+  }
+
   const connection = await prepareConnection();
   const orders = await connection.getRepository(OrderEntity).find({
     relations: {
@@ -26,7 +37,7 @@ export async function getServerSideProps() {
       orders: instanceToPlain<Order[]>(orders),
     },
   };
-}
+}, SESSION_OPTIONS);
 
 const Orders = ({ orders }: OrdersProps) => {
   return (

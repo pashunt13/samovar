@@ -99,6 +99,9 @@
 }
 
 @media (max-width: 600px) {
+  .title {
+    text-align: center;
+  }
   .grid {
     width: 100%;
     flex-direction: column;

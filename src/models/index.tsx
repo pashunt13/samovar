@@ -21,6 +21,8 @@ export interface User {
   id: number;
   tel: string;
   email: string;
+  login: string;
+  password: string;
 }
 
 export interface Order {
@@ -43,5 +45,7 @@ declare module 'iron-session' {
     user?: {
       id: number;
     };
+
+    authorized?: boolean;
   }
 }

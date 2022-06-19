@@ -4,7 +4,7 @@ import { instanceToPlain } from 'class-transformer';
 import { prepareConnection } from 'src/db';
 import { Item } from 'src/models';
 import { Item as ItemEntity } from '../src/entity/Item';
-import Layout from '../src/components/layout';
+import Layout from '../src/components/Layout';
 import ToCart from '../src/components/Menu/ToCart';
 import styles from '../styles/menu.module.css';
 

@@ -1,4 +1,4 @@
-import Layout from '../src/components/layout';
+import Layout from '../src/components/Layout';
 import Head from 'next/head';
 import styles from '../styles/shoppingCart.module.css';
 import ItemsList from '../src/components/ShoppingCart/ItemsList';
@@ -13,28 +13,25 @@ interface ShoppingCartProps {
   items: BasketItem[];
 }
 
-export const getServerSideProps = withIronSessionSsr(
-  async function getServerSideProps({ req }) {
-    try {
-      const connection = await prepareConnection();
-      const items = await connection
-        .getRepository(BasketItemEntity)
-        .createQueryBuilder('BasketItem')
-        .leftJoinAndSelect('BasketItem.item', 'Item')
-        .leftJoinAndSelect('BasketItem.user', 'User')
-        .where('BasketItem.user = :id', { id: req.session.user })
-        .getMany();
-      return {
-        props: {
-          items: instanceToPlain<BasketItem[]>(items),
-        },
-      };
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  SESSION_OPTIONS
-);
+export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
+  try {
+    const connection = await prepareConnection();
+    const items = await connection
+      .getRepository(BasketItemEntity)
+      .createQueryBuilder('BasketItem')
+      .leftJoinAndSelect('BasketItem.item', 'Item')
+      .leftJoinAndSelect('BasketItem.user', 'User')
+      .where('BasketItem.user = :id', { id: req.session.user })
+      .getMany();
+    return {
+      props: {
+        items: instanceToPlain<BasketItem[]>(items),
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}, SESSION_OPTIONS);
 
 export default function ShoppingCart({ items }: ShoppingCartProps) {
   return (
