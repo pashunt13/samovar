@@ -1,16 +1,26 @@
 import { useState } from 'react';
 import { HEADERS } from 'src/consts';
 import { Item } from 'src/models';
+import { BasketItem } from 'src/models';
 import styles from 'styles/menu.module.css';
 
 interface ToCartProps {
   item: Item;
+  basketItems: BasketItem[];
 }
 
-export default function ToCart({ item }: ToCartProps) {
-  const [isClicked, setIsClicked] = useState(false);
-  const [buttonClass, setButtonClass] = useState(styles.toCart);
-  const [buttonValue, setButtonValue] = useState('В корзину');
+export default function ToCart({ item, basketItems }: ToCartProps) {
+  const isInCart = basketItems.find(
+    (basketItem) => basketItem.item.id == item.id
+  );
+
+  const [isClicked, setIsClicked] = useState(isInCart ? true : false);
+  const [buttonClass, setButtonClass] = useState(
+    isInCart ? styles.inCart : styles.toCart
+  );
+  const [buttonValue, setButtonValue] = useState(
+    isInCart ? 'В корзине' : 'В корзину'
+  );
 
   const addToCartHandler = async () => {
     if (isClicked) return;
@@ -20,7 +30,6 @@ export default function ToCart({ item }: ToCartProps) {
         headers: HEADERS,
         body: JSON.stringify(item.id),
       });
-      const data = await response.json();
 
       setIsClicked(true);
       setButtonClass(styles.inCart);

@@ -2,7 +2,6 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { Item } from "./entity/Item";
 import { getConnection } from "typeorm";
-import { Category } from "./entity/Category";
 import { BasketItem } from "./entity/BasketItem";
 import { Order } from "./entity/Order";
 import { User } from "./entity/User";
@@ -32,7 +31,6 @@ export async function prepareConnection() {
     database: "samovarDB",
     entities: [
       Item,
-      Category,
       BasketItem,
       Order,
       OrderedItem,

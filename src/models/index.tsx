@@ -2,8 +2,7 @@ export interface Item {
   id: number;
   title: string;
   price: number;
-  // category
-  // ...
+  image: string;
 }
 
 export interface BasketItem {

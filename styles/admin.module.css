@@ -168,6 +168,7 @@
   line-height: 1;
   text-align: left;
   font-weight: 350;
+  padding: 8px;
 }
 
 .input {
@@ -179,8 +180,10 @@
   font-size: large;
 }
 
-.text {
-  padding: 8px;
+.agreement {
+  margin: 20px;
+  color: #aeaeae;
+  font-size: 10px;
 }
 
 .login {
