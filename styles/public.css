@@ -39,8 +39,8 @@
   margin: 0 auto;
   font: normal normal normal 16px/1.4em helvetica-w01-roman, helvetica-w02-roman,
     helvetica-lt-w10-roman, sans-serif;
-  width: 600px;
-  padding: 60px 0px;
+  max-width: 600px;
+  padding: 60px 25px;
   text-transform: none;
   color: #535353;
   text-align: center;
@@ -100,14 +100,15 @@
 }
 
 .main-page .bath p {
-  padding: 38px 0px;
+  padding: 38px 25px;
 }
 
 .main-page .cafe {
   height: 1000px;
 }
 
-.main-page .cafe div {
+.main-page .cafe div.left,
+.main-page .cafe div.right {
   display: inline-block;
   position: relative;
   border: 7px solid white;
@@ -136,11 +137,10 @@
 }
 
 .main-page .banket {
-  height: 560px;
+  padding: 70px 0px;
 }
 
 .main-page .banket h2 {
-  padding: 70px 0px 0px 0px;
   color: #222222;
   line-height: normal;
   letter-spacing: 0.08em;
@@ -148,34 +148,8 @@
     impact-w10-2010, sans-serif;
 }
 
-/* .main-page .banket a {
-  display: block;
-  background-color: #fff;
-  border: solid #222 2px;
-  width: 170px;
-  padding: 15px 0px;
-  text-transform: none;
-  margin: 0 auto;
-  color: #222222;
-  transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
-  font: normal normal normal 14px/1.4em helvetica-w01-roman, helvetica-w02-roman,
-    helvetica-lt-w10-roman, sans-serif;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.main-page .banket a:hover {
-  background-color: #222;
-  border-color: #222;
-  color: white;
-} */
-
 .main-page .slides {
   height: 800px;
-}
-
-.main-page .contacts {
-  height: 930px;
 }
 
 .main-page .contacts .title {
@@ -232,6 +206,7 @@
 
 .main-page .contacts .map iframe {
   border: 7px dashed #eee;
+  width: 800px;
 }
 
 .main-page .footer {
@@ -242,4 +217,39 @@
   color: #eee;
   font-style: oblique;
   background-color: #222222;
+}
+
+@media (max-width: 600px) {
+  .main-page .main-title h1 {
+    font-size: 15vw;
+  }
+  .main-page .main-title h1::before {
+    display: none;
+  }
+
+  .main-page .main-title h1::after {
+    display: none;
+  }
+
+  .main-page .block p {
+    font-size: 5vw;
+  }
+
+  .main-page .cafe div.left,
+  .main-page .cafe div.right {
+    width: 350px;
+    height: 350px;
+    top: 100px;
+    right: 0;
+    left: 0;
+    margin-bottom: 100px;
+  }
+
+  .main-page .cafe div h2 {
+    margin-top: 100px;
+  }
+
+  .main-page .contacts .map iframe {
+    width: auto;
+  }
 }

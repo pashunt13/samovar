@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/home.module.css';
 import Layout from '../src/components/Layout';
 import Image from 'next/image';
 import { Parallax } from 'react-parallax';
@@ -52,22 +52,24 @@ export default function Home() {
           </p>
         </div>
 
-        <Parallax bgImage="/images/cafe.jpg" strength={500}>
-          <div className="cafe block parallax-window">
-            <div className="left">
-              <h2>
-                Кафе
-                <br />
-                Самовар
-              </h2>
-            </div>
-            <div className="right">
-              <h2>Организация Банкетов</h2>
-            </div>
+        <Parallax
+          bgImage="/images/cafe.jpg"
+          strength={500}
+          className="cafe block parallax-window"
+        >
+          <div className="left">
+            <h2>
+              Кафе
+              <br />
+              Самовар
+            </h2>
+          </div>
+          <div className="right">
+            <h2>Организация Банкетов</h2>
           </div>
         </Parallax>
 
-        <div className="banket block parallax-window" data-parallax="scroll">
+        <div className="banket block" data-parallax="scroll">
           <h2>Кафе Самовар</h2>
           <p>
             В кафе Самовар Вы найдете широкий ассортмент блюд русской кухни и не
@@ -131,7 +133,6 @@ export default function Home() {
           <div className="map">
             <iframe
               src="https://api-maps.yandex.ru/frame/v1/-/C6UfQWmF"
-              width="760"
               height="500"
             ></iframe>
           </div>

@@ -1,4 +1,3 @@
-import type { NextApiRequest } from 'next';
 import { prepareConnection } from 'src/db';
 import { Order as OrderEntity } from 'src/entity/Order';
 import { OrderedItem } from 'src/models';

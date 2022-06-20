@@ -1,6 +1,6 @@
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
-import styles from 'styles/Home.module.css';
+import styles from 'styles/home.module.css';
 
 const slideImages = [
   { path: '/images/1.jpg', alt: 'Кафе' },

@@ -1,0 +1,62 @@
+.eachSlide > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 1000px;
+  width: 100%;
+}
+
+.eachSlide span {
+  margin-top: auto;
+  padding: 5px;
+  width: 100%;
+  font-size: 20px;
+  color: #eaeaea;
+  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  align-items: baseline;
+}
+
+.menuLink {
+  color: #0070f3;
+}
+
+.menuLink:hover {
+  color: #0070f3;
+  text-decoration: underline;
+}
+
+.contactsLink {
+  display: block;
+  background-color: #fff;
+  border: solid #222 2px;
+  width: 170px;
+  padding: 15px 0px;
+  text-transform: none;
+  margin: 0 auto;
+  color: #222222;
+  transition: border-color 0.4s ease 0s, background-color 0.4s ease 0s;
+  font: normal normal normal 14px/1.4em helvetica-w01-roman, helvetica-w02-roman,
+    helvetica-lt-w10-roman, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.contactsLink:hover {
+  text-decoration: none;
+  background-color: #222;
+  border-color: #222;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .eachSlide > div {
+    height: 400px;
+  }
+}

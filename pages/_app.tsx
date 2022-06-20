@@ -1,7 +1,7 @@
 import '../styles/reset.css';
-import '../styles/public.css';
 import 'reflect-metadata';
 import '../styles/globals.css';
+import '../styles/public.css';
 import { AppWrapper } from 'src/context/state';
 
 interface MyAppProps {
