@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { HEADERS, SESSION_OPTIONS } from 'src/consts';
 import { withIronSessionSsr } from 'iron-session/next';
 import Head from 'next/head';
-import Link from 'next/link';
 
 interface OrderedItemProps {
   orderedItems: OrderedItem[];
@@ -38,7 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
       },
     },
     where: {
-      id: orderId,
+      id: Number(orderId),
     },
   });
 
@@ -66,7 +65,7 @@ const OrderedItems = ({ order }: OrderedItemProps) => {
       return;
     }
     try {
-      const response = await fetch('/api/order', {
+      await fetch('/api/order', {
         method: 'PUT',
         headers: HEADERS,
         body: JSON.stringify({ id: order.id, status: !orderStatus }),

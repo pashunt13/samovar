@@ -1,5 +1,5 @@
-import '../styles/reset.css';
 import 'reflect-metadata';
+import '../styles/reset.css';
 import '../styles/globals.css';
 import '../styles/public.css';
 

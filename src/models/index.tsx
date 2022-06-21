@@ -2,18 +2,13 @@ export interface Item {
   id: number;
   title: string;
   price: number;
-  image: string;
+  image?: string;
 }
 
 export interface BasketItem {
   id: number;
   item: Item;
   quantity: number;
-}
-
-export interface AppContextModel {
-  basketItems?: BasketItem[];
-  setBasketItems?: Function;
 }
 
 export interface User {
@@ -26,7 +21,7 @@ export interface User {
 
 export interface Order {
   id: number;
-  date: string;
+  date: Date;
   user: User;
   status: boolean;
   orderedItems: OrderedItem[];
@@ -41,10 +36,7 @@ export interface OrderedItem {
 
 declare module 'iron-session' {
   interface IronSessionData {
-    user?: {
-      id: number;
-    };
-
+    user?: number;
     authorized?: boolean;
   }
 }

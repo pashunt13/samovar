@@ -35,6 +35,7 @@ const Order = ({
       });
 
       setBasketItems([]);
+      return alert('Заказ принят!');
     } catch (error) {
       console.log(error);
     }

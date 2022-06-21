@@ -1,40 +1,34 @@
-import "reflect-metadata";
-import { createConnection } from "typeorm";
-import { Item } from "./entity/Item";
-import { getConnection } from "typeorm";
-import { BasketItem } from "./entity/BasketItem";
-import { Order } from "./entity/Order";
-import { User } from "./entity/User";
-import { OrderedItem } from "./entity/OrderedItem";
+import 'reflect-metadata';
+import { Item } from './entity/Item';
+import { BasketItem } from './entity/BasketItem';
+import { Order } from './entity/Order';
+import { User } from './entity/User';
+import { OrderedItem } from './entity/OrderedItem';
+import { DataSource } from 'typeorm';
 
-let connection = null;
+const AppDataSource = new DataSource({
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'postgres',
+  database: 'samovarDB',
+  entities: [Item, BasketItem, Order, OrderedItem, User],
+  logging: true,
+});
 
-export async function prepareConnection() {
-  if (connection) return connection;
-  
-  // clean up old connection that references outdated hot-reload classes
-  try {
-    const staleConnection = getConnection();
-    if (staleConnection)
-      await staleConnection.close();
-  } catch (error) {
-    // no stale connection to clean up
+async function prepareConnection() {
+  if (AppDataSource.isInitialized) {
+    return AppDataSource;
   }
 
-  // wait for new default connection
-  return connection = await createConnection({
-    type: "postgres",
-    host: "host",
-    port: 5432,
-    username: "postgres",
-    password: "postgres",
-    database: "samovarDB",
-    entities: [
-      Item,
-      BasketItem,
-      Order,
-      OrderedItem,
-      User
-    ]
-  });
+  try {
+    await AppDataSource.initialize();
+    console.log('DataSource has been initialized');
+    return AppDataSource;
+  } catch (error) {
+    throw `DataSource initialization error: ${error}`;
+  }
 }
+
+export { AppDataSource, prepareConnection };

@@ -34,7 +34,7 @@ export default withIronSessionApiRoute(async function handler(
 
     const order = await orderRepository.save({
       date: new Date(),
-      user: user.id,
+      user: user,
       status: false,
       orderedItems: basketItems.map((basketItem: BasketItem) => {
         return {
@@ -44,9 +44,7 @@ export default withIronSessionApiRoute(async function handler(
       }),
     });
 
-    const clearBasketItems = await basketItemRepository.delete({
-      user: req.session.user,
-    });
+    const clearBasketItems = await basketItemRepository.delete({ user });
 
     res.status(201).json(clearBasketItems);
   } else if (req.method == 'PUT') {
