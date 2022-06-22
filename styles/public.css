@@ -246,7 +246,9 @@
   }
 
   .main-page .cafe div h2 {
-    margin-top: 100px;
+    font: normal normal normal 40px/1.4em impact, impact-w01-2010,
+      impact-w02-2010, impact-w10-2010, sans-serif;
+    margin-top: 110px;
   }
 
   .main-page .contacts .map iframe {

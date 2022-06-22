@@ -79,7 +79,8 @@ const Order = ({
               onClick={() => setIsChecked(!isChecked)}
             />
             <label htmlFor="agreement">
-              Я соглашаюсь с обработкой персональных данных
+              Я соглашаюсь с обработкой{' '}
+              <a href="/agreement.html">персональных данных</a>
             </label>
           </div>
           <button className={styles.confirm} onClick={confirmOrder}>

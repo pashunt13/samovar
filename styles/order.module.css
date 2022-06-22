@@ -77,6 +77,10 @@
   font-size: 10px;
 }
 
+.agreement a {
+  color: #0070f3;
+}
+
 .confirm {
   margin: 20px;
   background: linear-gradient(#666, #000);
