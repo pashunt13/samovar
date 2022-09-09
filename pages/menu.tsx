@@ -4,24 +4,28 @@ import { instanceToPlain } from 'class-transformer';
 import { prepareConnection } from 'src/db';
 import { Item } from 'src/models';
 import { Item as ItemEntity } from '../src/entity/Item';
+import { Category } from 'src/models';
+import { Category as CategoryEntity } from '../src/entity/Category';
 import { BasketItem as BasketItemEntity } from 'src/entity/BasketItem';
 import { BasketItem } from 'src/models';
 import Layout from '../src/components/Layout';
 import ToCart from '../src/components/Menu/ToCart';
+import Categories from '../src/components/Menu/Categories';
 import styles from '../styles/menu.module.css';
 import { withIronSessionSsr } from 'iron-session/next';
 import { SESSION_OPTIONS } from 'src/consts';
 
 interface MenuProps {
   items: Item[];
+  categories: Category[];
   basketItems: BasketItem[];
 }
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   try {
     const connection = await prepareConnection();
-    const itemRepository = connection.getRepository(ItemEntity);
-    const allItems = await itemRepository.find();
+    const items = await connection.getRepository(ItemEntity).find();
+    const categories = await connection.getRepository(CategoryEntity).find();
     const basketItems = await connection
       .getRepository(BasketItemEntity)
       .createQueryBuilder('BasketItem')
@@ -32,7 +36,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
 
     return {
       props: {
-        items: instanceToPlain<Item[]>(allItems),
+        items: instanceToPlain<Item[]>(items),
+        categories: instanceToPlain<Category[]>(categories),
         basketItems: instanceToPlain<BasketItem[]>(basketItems),
       },
     };
@@ -41,7 +46,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   }
 }, SESSION_OPTIONS);
 
-export default function Menu({ items, basketItems }: MenuProps) {
+export default function Menu({ items, basketItems, categories }: MenuProps) {
   return (
     <Layout>
       <Head>
@@ -55,6 +60,7 @@ export default function Menu({ items, basketItems }: MenuProps) {
 
       <div className={styles.container}>
         <h1 className={styles.title}>Меню</h1>
+        <Categories categories={categories} />
         <ul className={styles.grid}>
           {items.map((item) => {
             const itemImage = item.image ? item.image : '/images/no_image.png';

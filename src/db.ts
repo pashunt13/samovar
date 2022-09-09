@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { Item } from './entity/Item';
 import { BasketItem } from './entity/BasketItem';
+import { Category } from './entity/Category';
 import { Order } from './entity/Order';
 import { User } from './entity/User';
 import { OrderedItem } from './entity/OrderedItem';
@@ -8,12 +9,12 @@ import { DataSource } from 'typeorm';
 
 const AppDataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
+  host: 'host',
   port: 5432,
   username: 'postgres',
   password: 'postgres',
   database: 'samovarDB',
-  entities: [Item, BasketItem, Order, OrderedItem, User],
+  entities: [Item, BasketItem, Category, Order, OrderedItem, User],
   logging: true,
 });
 

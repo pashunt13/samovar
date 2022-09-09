@@ -13,6 +13,17 @@
   font-weight: 500;
 }
 
+.categoryList {
+  display: flex;
+}
+
+.categoryList li {
+  border: 1px solid black;
+  border-radius: 14px;
+  padding: 5px;
+  margin: 10px;
+}
+
 .listItem {
   margin: 0 1rem 1rem 1rem;
   text-align: left;
@@ -74,6 +85,7 @@
 
 .toCart:hover {
   background-color: limegreen;
+  cursor: pointer;
 }
 
 .inCart {
