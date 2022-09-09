@@ -3,6 +3,12 @@ export interface Item {
   title: string;
   price: number;
   image?: string;
+  category: Category;
+}
+
+export interface Category {
+  id: number;
+  title: string;
 }
 
 export interface BasketItem {
