@@ -9,6 +9,10 @@ body {
   font-size: 18px;
 }
 
+main {
+  background-color: #aa7d37;
+}
+
 a {
   color: inherit;
   text-decoration: none;

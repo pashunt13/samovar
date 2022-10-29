@@ -12,12 +12,6 @@ export class User {
   @Column("varchar")
   email: string;
 
-  @Column("varchar")
-  login: string;
-
-  @Column("varchar")
-  password: string;
-
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 }
