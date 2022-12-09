@@ -1,15 +1,17 @@
 .container {
-  margin: auto;
+  margin: 1rem auto;
+  padding: 1rem;
   text-align: center;
   justify-content: center;
   max-width: 60%;
+  border-radius: 10px;
   background-color: #fff;
 }
 
 .title {
-  margin: 1rem 6%;
+  margin-bottom: 1rem;
   line-height: 1.5;
-  text-align: left;
+  text-align: center;
   font-size: 2rem;
   font-weight: 500;
 }

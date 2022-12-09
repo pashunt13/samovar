@@ -4,20 +4,20 @@ import { instanceToPlain } from 'class-transformer';
 import { prepareConnection } from 'src/db';
 import { Item } from 'src/models';
 import { Item as ItemEntity } from '../src/entity/Item';
-import { Category } from 'src/models';
+import { Category as CategoryModel } from 'src/models';
 import { Category as CategoryEntity } from '../src/entity/Category';
 import { BasketItem as BasketItemEntity } from 'src/entity/BasketItem';
 import { BasketItem } from 'src/models';
 import Layout from '../src/components/Layout';
 import ToCart from '../src/components/Menu/ToCart';
-import Categories from '../src/components/Menu/Categories';
+import Category from '../src/components/Menu/Category';
 import styles from '../styles/menu.module.css';
 import { withIronSessionSsr } from 'iron-session/next';
 import { SESSION_OPTIONS } from 'src/consts';
 
 interface MenuProps {
   items: Item[];
-  categories: Category[];
+  categories: CategoryModel[];
   basketItems: BasketItem[];
 }
 
@@ -37,7 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
     return {
       props: {
         items: instanceToPlain<Item[]>(items),
-        categories: instanceToPlain<Category[]>(categories),
+        categories: instanceToPlain<CategoryModel[]>(categories),
         basketItems: instanceToPlain<BasketItem[]>(basketItems),
       },
     };
@@ -60,10 +60,16 @@ export default function Menu({ items, basketItems, categories }: MenuProps) {
 
       <div className={styles.container}>
         <h1 className={styles.title}>Меню</h1>
-        <Categories categories={categories} />
+        <ul className={styles.categoryList}>
+          {categories.map((category) => {
+            return <Category category={category} key={category.id} />;
+          })}
+        </ul>
         <ul className={styles.grid}>
           {items.map((item) => {
-            const itemImage = item.image ? item.image : '/images/kfcExample.png';
+            const itemImage = item.image
+              ? item.image
+              : '/images/kfcExample.png';
             return (
               <li className={styles.listItem} key={item.id}>
                 <Image

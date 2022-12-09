@@ -24,16 +24,28 @@
 }
 
 .categoryList li {
-  border: 1px solid #aa7d37;
   border-radius: 14px;
   font-weight: 500;
   align-items: center;
   padding: 4px 10px;
   margin: 3px;
+  user-select: none;
 }
 
 .categoryList li:hover {
   cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+}
+
+.categoryItem {
+  border: 1px solid #aa7d37;
+}
+
+.categoryItemClicked {
+  border: 1px solid #887861;
+  color: #eaeaea;
+  background-color: #8b6528;
 }
 
 .listItem {
@@ -75,6 +87,7 @@
   line-height: 20px;
   font-weight: 700;
   width: 100%;
+  cursor: pointer;
 }
 
 .menuItemPrice {
@@ -126,7 +139,7 @@
   .container {
     margin: 14px;
   }
-  
+
   .title {
     text-align: center;
   }
