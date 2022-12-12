@@ -4,25 +4,37 @@ import styles from 'styles/menu.module.css';
 
 interface CategoryProps {
   category: CategoryModel;
+  addCategoryHandler: Function;
+  removeCategoryHandler: Function;
 }
 
-const Category = ({ category }: CategoryProps) => {
+const Category = ({
+  category,
+  addCategoryHandler,
+  removeCategoryHandler,
+}: CategoryProps) => {
   const [isClicked, setIsClicked] = useState(false);
   const [buttonClass, setButtonClass] = useState(styles.categoryItem);
 
-  const categoryHandler = () => {
+  const categoryHandler = (id: number) => {
     if (!isClicked) {
+      addCategoryHandler(id);
       setIsClicked(true);
       setButtonClass(styles.categoryItemClicked);
       return;
     }
+    removeCategoryHandler(id);
     setIsClicked(false);
     setButtonClass(styles.categoryItem);
     return;
   };
 
   return (
-    <li className={buttonClass} key={category.id} onClick={categoryHandler}>
+    <li
+      className={buttonClass}
+      key={category.id}
+      onClick={() => categoryHandler(category.id)}
+    >
       {category.title}
     </li>
   );

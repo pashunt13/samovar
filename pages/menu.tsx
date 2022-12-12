@@ -10,13 +10,14 @@ import { BasketItem as BasketItemEntity } from 'src/entity/BasketItem';
 import { BasketItem } from 'src/models';
 import Layout from '../src/components/Layout';
 import ToCart from '../src/components/Menu/ToCart';
-import Category from '../src/components/Menu/Category';
+import CategoryList from '../src/components/Menu/CategoryList';
 import styles from '../styles/menu.module.css';
 import { withIronSessionSsr } from 'iron-session/next';
 import { SESSION_OPTIONS } from 'src/consts';
+import { useState } from 'react';
 
 interface MenuProps {
-  items: Item[];
+  allItems: Item[];
   categories: CategoryModel[];
   basketItems: BasketItem[];
 }
@@ -24,7 +25,7 @@ interface MenuProps {
 export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   try {
     const connection = await prepareConnection();
-    const items = await connection.getRepository(ItemEntity).find();
+    const allItems = await connection.getRepository(ItemEntity).find();
     const categories = await connection.getRepository(CategoryEntity).find();
     const basketItems = await connection
       .getRepository(BasketItemEntity)
@@ -36,7 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
 
     return {
       props: {
-        items: instanceToPlain<Item[]>(items),
+        allItems: instanceToPlain<Item[]>(allItems),
         categories: instanceToPlain<CategoryModel[]>(categories),
         basketItems: instanceToPlain<BasketItem[]>(basketItems),
       },
@@ -46,7 +47,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   }
 }, SESSION_OPTIONS);
 
-export default function Menu({ items, basketItems, categories }: MenuProps) {
+export default function Menu({ allItems, basketItems, categories }: MenuProps) {
+  const [items, setItems] = useState(allItems);
+
   return (
     <Layout>
       <Head>
@@ -60,11 +63,7 @@ export default function Menu({ items, basketItems, categories }: MenuProps) {
 
       <div className={styles.container}>
         <h1 className={styles.title}>Меню</h1>
-        <ul className={styles.categoryList}>
-          {categories.map((category) => {
-            return <Category category={category} key={category.id} />;
-          })}
-        </ul>
+        <CategoryList categoryList={categories} setItems={setItems} />
         <ul className={styles.grid}>
           {items.map((item) => {
             const itemImage = item.image
