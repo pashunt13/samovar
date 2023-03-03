@@ -1,4 +1,4 @@
-import { HEADERS } from 'src/consts';
+import { useCallback, useEffect, useState } from 'react';
 import { Category as CategoryModel } from 'src/models';
 import styles from 'styles/menu.module.css';
 import Category from './Category';
@@ -8,32 +8,36 @@ interface CategoryListProps {
   setItems: Function;
 }
 
-let categoryFilter: number[] = [];
-
 const CategoryList = ({ categoryList, setItems }: CategoryListProps) => {
+  const [categoryFilter, setCategoryFilter] = useState([]);
+
   const addCategoryHandler = (id: number) => {
-    categoryFilter.push(id);
-    return getNewItems();
+    setCategoryFilter([...categoryFilter, id]);
   };
 
   const removeCategoryHandler = (id: number) => {
-    categoryFilter = categoryFilter.filter((categoryId) => categoryId !== id);
-    return getNewItems();
+    setCategoryFilter(categoryFilter.filter((categoryId) => categoryId !== id));
   };
 
-  const getNewItems = async () => {
+  const getNewItems = useCallback(async () => {
     try {
-      const response = await fetch('/api/menu', {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify(categoryFilter),
-      });
+      let response;
+      if (categoryFilter.length === 0) {
+        response = await fetch('/api/menu/');
+      } else {
+        response = await fetch('/api/menu/' + categoryFilter);
+      }
+
       const data = await response.json();
       return setItems(data);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [categoryFilter, setItems]);
+
+  useEffect(() => {
+    getNewItems();
+  }, [categoryFilter, getNewItems]);
 
   return (
     <ul className={styles.categoryList}>

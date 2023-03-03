@@ -24,10 +24,10 @@
 }
 
 .categoryList li {
-  border-radius: 14px;
   font-weight: 500;
   align-items: center;
-  padding: 4px 10px;
+  border-radius: 14px;
+  padding: 0;
   margin: 3px;
   user-select: none;
 }
@@ -40,12 +40,26 @@
 
 .categoryItem {
   border: 1px solid #aa7d37;
+  border-radius: inherit;
+  background: none;
+  color: inherit;
+  padding: 4px 10px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  width: inherit;
 }
 
 .categoryItemClicked {
   border: 1px solid #887861;
+  border-radius: inherit;
   color: #eaeaea;
   background-color: #8b6528;
+  padding: 4px 10px;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  width: inherit;
 }
 
 .listItem {

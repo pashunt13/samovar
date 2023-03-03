@@ -15,7 +15,7 @@ const AppDataSource = new DataSource({
   password: 'postgres',
   database: 'samovarDB',
   entities: [Item, BasketItem, Category, Order, OrderedItem, User],
-  logging: true,
+  logging: false,
 });
 
 async function prepareConnection() {

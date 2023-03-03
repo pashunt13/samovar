@@ -30,12 +30,13 @@ const Category = ({
   };
 
   return (
-    <li
-      className={buttonClass}
-      key={category.id}
-      onClick={() => categoryHandler(category.id)}
-    >
-      {category.title}
+    <li key={category.id}>
+      <button
+        className={buttonClass}
+        onClick={() => categoryHandler(category.id)}
+      >
+        {category.title}
+      </button>
     </li>
   );
 };
