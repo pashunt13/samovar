@@ -21,6 +21,7 @@
   display: flex;
   text-align: left;
   align-items: center;
+  justify-content: space-between;
   color: inherit;
   text-decoration: none;
   border: 1px solid #eaeaea;
@@ -121,24 +122,42 @@
   .container {
     max-width: 90%;
   }
+
   .title {
     text-align: center;
   }
+
   .itemTitle {
-    padding: 20px;
+    padding: 10px;
     max-width: 120px;
   }
+
   .cartCounter {
-    margin: auto;
+    margin: auto auto auto 0;
   }
+
   .counter {
-    padding: 6px 6px;
+    padding: 4px;
     max-width: 30px;
   }
+
   .price {
-    margin: auto 10px;
+    margin: auto 5px;
   }
+
   .order {
     width: 180px;
+  }
+
+  .rightPosition {
+    margin: auto 5px auto auto;
+  }
+
+  .totalTitle {
+    margin: auto 5px;
+  }
+
+  .totalValue {
+    margin: auto 5px;
   }
 }
