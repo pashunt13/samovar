@@ -1,15 +1,14 @@
-import Image from 'next/image';
 import Head from 'next/head';
 import { instanceToPlain } from 'class-transformer';
 import { prepareConnection } from 'src/db';
-import { Item } from 'src/models';
+import { Item as ItemModel } from 'src/models';
 import { Item as ItemEntity } from '../src/entity/Item';
 import { Category as CategoryModel } from 'src/models';
 import { Category as CategoryEntity } from '../src/entity/Category';
 import { BasketItem as BasketItemEntity } from 'src/entity/BasketItem';
 import { BasketItem } from 'src/models';
 import Layout from '../src/components/Layout';
-import ToCart from '../src/components/Menu/ToCart';
+import Item from '../src/components/Menu/Item';
 import CategoryList from '../src/components/Menu/CategoryList';
 import styles from '../styles/menu.module.css';
 import { withIronSessionSsr } from 'iron-session/next';
@@ -17,7 +16,7 @@ import { SESSION_OPTIONS } from 'src/consts';
 import { useState } from 'react';
 
 interface MenuProps {
-  allItems: Item[];
+  allItems: ItemModel[];
   categories: CategoryModel[];
   basketItems: BasketItem[];
 }
@@ -37,7 +36,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
 
     return {
       props: {
-        allItems: instanceToPlain<Item[]>(allItems),
+        allItems: instanceToPlain<ItemModel[]>(allItems),
         categories: instanceToPlain<CategoryModel[]>(categories),
         basketItems: instanceToPlain<BasketItem[]>(basketItems),
       },
@@ -66,27 +65,7 @@ export default function Menu({ allItems, basketItems, categories }: MenuProps) {
         <CategoryList categoryList={categories} setItems={setItems} />
         <ul className={styles.grid}>
           {items.map((item) => {
-            const itemImage = item.image
-              ? item.image
-              : '/images/kfcExample.png';
-            return (
-              <li className={styles.listItem} key={item.id}>
-                <Image
-                  priority
-                  src={itemImage}
-                  className={styles.menuImage}
-                  height={250}
-                  width={250}
-                  alt="login"
-                />
-
-                <div className={styles.menuItem}>
-                  <div className={styles.menuItemTitle}>{item.title}</div>
-                  <div className={styles.menuItemPrice}>{item.price}р.</div>
-                  <ToCart item={item} basketItems={basketItems} />
-                </div>
-              </li>
-            );
+            return <Item item={item} basketItems={basketItems} key={item.id} />;
           })}
         </ul>
       </div>
