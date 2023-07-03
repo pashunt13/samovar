@@ -65,6 +65,7 @@
   width: 240px;
   border: 1px solid #aeaeae;
   border-radius: 10px;
+  outline: none;
 }
 
 .text {
