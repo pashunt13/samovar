@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Category } from "./Category";
 
 @Entity()
 export class Item {
@@ -13,4 +14,7 @@ export class Item {
 
   @Column("varchar")
   image?: string;
+
+  @ManyToOne(() => Category, (category) => category)
+  category: Category;
 }

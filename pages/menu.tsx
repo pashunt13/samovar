@@ -4,24 +4,29 @@ import { instanceToPlain } from 'class-transformer';
 import { prepareConnection } from 'src/db';
 import { Item } from 'src/models';
 import { Item as ItemEntity } from '../src/entity/Item';
+import { Category as CategoryModel } from 'src/models';
+import { Category as CategoryEntity } from '../src/entity/Category';
 import { BasketItem as BasketItemEntity } from 'src/entity/BasketItem';
 import { BasketItem } from 'src/models';
 import Layout from '../src/components/Layout';
 import ToCart from '../src/components/Menu/ToCart';
+import CategoryList from '../src/components/Menu/CategoryList';
 import styles from '../styles/menu.module.css';
 import { withIronSessionSsr } from 'iron-session/next';
 import { SESSION_OPTIONS } from 'src/consts';
+import { useState } from 'react';
 
 interface MenuProps {
-  items: Item[];
+  allItems: Item[];
+  categories: CategoryModel[];
   basketItems: BasketItem[];
 }
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   try {
     const connection = await prepareConnection();
-    const itemRepository = connection.getRepository(ItemEntity);
-    const allItems = await itemRepository.find();
+    const allItems = await connection.getRepository(ItemEntity).find();
+    const categories = await connection.getRepository(CategoryEntity).find();
     const basketItems = await connection
       .getRepository(BasketItemEntity)
       .createQueryBuilder('BasketItem')
@@ -32,7 +37,8 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
 
     return {
       props: {
-        items: instanceToPlain<Item[]>(allItems),
+        allItems: instanceToPlain<Item[]>(allItems),
+        categories: instanceToPlain<CategoryModel[]>(categories),
         basketItems: instanceToPlain<BasketItem[]>(basketItems),
       },
     };
@@ -41,7 +47,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
   }
 }, SESSION_OPTIONS);
 
-export default function Menu({ items, basketItems }: MenuProps) {
+export default function Menu({ allItems, basketItems, categories }: MenuProps) {
+  const [items, setItems] = useState(allItems);
+
   return (
     <Layout>
       <Head>
@@ -55,9 +63,12 @@ export default function Menu({ items, basketItems }: MenuProps) {
 
       <div className={styles.container}>
         <h1 className={styles.title}>Меню</h1>
+        <CategoryList categoryList={categories} setItems={setItems} />
         <ul className={styles.grid}>
           {items.map((item) => {
-            const itemImage = item.image ? item.image : '/images/no_image.png';
+            const itemImage = item.image
+              ? item.image
+              : '/images/kfcExample.png';
             return (
               <li className={styles.listItem} key={item.id}>
                 <Image
