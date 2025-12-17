@@ -99,6 +99,11 @@
   background: linear-gradient(#000, #666);
 }
 
+.confirm:disabled {
+  cursor: not-allowed;
+  opacity: 50%;
+}
+
 @media (max-width: 600px) {
   .modalContent {
     padding: 20px;

@@ -29,6 +29,8 @@
   text-align: center;
   text-transform: uppercase;
   border-bottom: 4px solid #222;
+  background: #eee;
+  background-image: none;
 }
 
 .main-page .block:not(:first-child) {

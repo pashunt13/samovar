@@ -56,6 +56,7 @@ const Order = ({
             mask="+7 (999) 999-99-99"
             value={tel}
             onChange={(e) => setTel(e.target.value)}
+            required
           />
           <ReactInputMask
             className={styles.input}
@@ -83,7 +84,11 @@ const Order = ({
               <a href="/agreement.html">персональных данных</a>
             </label>
           </div>
-          <button className={styles.confirm} onClick={confirmOrder}>
+          <button
+            className={styles.confirm}
+            onClick={confirmOrder}
+            disabled={!isChecked}
+          >
             Подтвердить заказ
           </button>
         </div>

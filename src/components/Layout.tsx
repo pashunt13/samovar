@@ -25,7 +25,7 @@ export default function Layout({ children }: LayoutProps) {
           </nav>
         </header>
         <main>{children}</main>
-        <footer className={styles.footer}>©Кафе Самовар 2022</footer>
+        <footer className={styles.footer}>©Кафе Самовар 2025</footer>
       </div>
     </>
   );

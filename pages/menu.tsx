@@ -67,8 +67,8 @@ export default function Menu({ allItems, basketItems, categories }: MenuProps) {
         <ul className={styles.grid}>
           {items.map((item) => {
             const itemImage = item.image
-              ? item.image
-              : '/images/kfcExample.png';
+              ? `/images/${item.image}`
+              : '/images/no_image.png';
             return (
               <li className={styles.listItem} key={item.id}>
                 <Image
